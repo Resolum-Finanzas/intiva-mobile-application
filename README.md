@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # intiva_mobile_application
 
 A new Flutter project.
@@ -15,3 +16,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# intiva-mobile-application
+>>>>>>> 0e386eb77b65c8f9553cd67032a8370a6159c0e0
