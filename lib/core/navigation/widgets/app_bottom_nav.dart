@@ -94,6 +94,7 @@ class AppBottomNav extends StatelessWidget {
             ),
           ],
         ),
+      ],
       ),
     );
   }
