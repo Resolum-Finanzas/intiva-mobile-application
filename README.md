@@ -1,21 +1,8 @@
-<<<<<<< HEAD
-# intiva_mobile_application
+# Intiva Mobile Application
 
-A new Flutter project.
+Intiva is a mobile application designed for financial institutions to manage customer information and generate vehicle loan payment schedules. The platform implements the French amortization method, supports partial and total grace periods through smart purchase financing, and calculates financial indicators such as Net Present Value (NPV) and Internal Rate of Return (IRR). It provides accurate financial calculations while aligning with the requirements of the Peruvian financial system.
 
-## Getting Started
+### Setup
+1. flutter pub get
+2. dart run build_runner build
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
-# intiva-mobile-application
->>>>>>> 0e386eb77b65c8f9553cd67032a8370a6159c0e0

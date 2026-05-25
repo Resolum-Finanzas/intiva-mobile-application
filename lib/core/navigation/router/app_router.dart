@@ -8,6 +8,7 @@ import '../../../features/home/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
 import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_bloc.dart';
+import '../../../features/catalog/presentation/pages/catalog_page.dart';
 
 class AppRouter {
   final AuthGuard _authGuard;
@@ -25,7 +26,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RouteNames.signUp,
-        builder: (_, _) => const PlaceholderPage(name: 'Registrarse'),
+        builder: (_, _) => const CatalogPage(),
       ),
       ShellRoute(
         builder: (_, _, child) => AppBottomNav(child: child),
@@ -33,7 +34,7 @@ class AppRouter {
           GoRoute(path: RouteNames.home, builder: (_, _) => const HomePage()),
           GoRoute(
             path: RouteNames.catalog,
-            builder: (_, _) => const PlaceholderPage(name: 'Catálogo'),
+            builder: (_, _) => const CatalogPage(),
             routes: [
               GoRoute(
                 path: ':id',

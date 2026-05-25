@@ -2,7 +2,7 @@
 /// It centralizes all the API paths, making it easier to manage and update them in one place.
 abstract class ApiEndpoints {
   // Base URL
-  static const String baseUrl = 'http://10.0.2.2:8080/api/v1';
+  static const String baseUrl = 'https://intiva.free.beeceptor.com/api/v1';
 
   // IAM
   static const String signIn = '/authentication/sign-in';
@@ -10,7 +10,7 @@ abstract class ApiEndpoints {
 
   // Catalog
   static const String vehicles = '/vehicles';
-  static String vehicleDetail(String id) => '/vehicles/$id';
+  static const String vehicleById = '/vehicles/{id}';
 
   // Simulador
   static const String simulate = '/simulate';
