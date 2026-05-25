@@ -117,7 +117,7 @@ class _LoginContentState extends State<LoginContent> {
               border: Border.all(color: AppColors.border, width: 1),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.015),
+                  color: Colors.black.withValues(alpha: 0.015),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

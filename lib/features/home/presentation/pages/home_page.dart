@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF1E3A8A).withOpacity(0.3),
+                          color: const Color(0xFF1E3A8A).withValues(alpha: 0.3),
                           blurRadius: 15,
                           offset: const Offset(0, 8),
                         ),
@@ -101,13 +101,13 @@ class HomePage extends StatelessWidget {
                             height: 100,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(12),
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.white.withOpacity(0.1),
+                                  Colors.white.withValues(alpha: 0.1),
                                   Colors.transparent,
                                 ],
                                 begin: Alignment.topCenter,
@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                                 width: 4,
                                 height: 4,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.white.withValues(alpha: 0.5),
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -225,7 +225,7 @@ class HomePage extends StatelessWidget {
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -313,7 +313,7 @@ class HomePage extends StatelessWidget {
                       color: const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFFE2E8F0).withOpacity(0.5),
+                        color: const Color(0xFFE2E8F0).withValues(alpha: 0.5),
                       ),
                     ),
                     padding: const EdgeInsets.all(20),
@@ -347,7 +347,7 @@ class HomePage extends StatelessWidget {
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
