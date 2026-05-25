@@ -4,6 +4,7 @@ import '../router/router_names.dart';
 import '../../../features/shared/presentation/pages/placeholder_page.dart';
 import '../../navigation/widgets/app_bottom_nav.dart';
 import '../../../features/iam/login/presentation/pages/login_page.dart';
+import '../../../features/home/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
 import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_bloc.dart';
@@ -29,10 +30,7 @@ class AppRouter {
       ShellRoute(
         builder: (_, _, child) => AppBottomNav(child: child),
         routes: [
-          GoRoute(
-            path: RouteNames.home,
-            builder: (_, _) => const PlaceholderPage(name: 'Inicio'),
-          ),
+          GoRoute(path: RouteNames.home, builder: (_, _) => const HomePage()),
           GoRoute(
             path: RouteNames.catalog,
             builder: (_, _) => const PlaceholderPage(name: 'Catálogo'),
