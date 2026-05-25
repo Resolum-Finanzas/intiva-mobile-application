@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AuthGuard {
   final FlutterSecureStorage _storage;
   AuthGuard(this._storage);
+  
   Future<String?> redirect(BuildContext context, GoRouterState state) async {
     final token = await _storage.read(key: 'access_token');
     final hasToken = token != null;
@@ -16,4 +17,5 @@ class AuthGuard {
     if (hasToken && isAuthRoute) return RouteNames.home;
     return null;
   }
+   
 }

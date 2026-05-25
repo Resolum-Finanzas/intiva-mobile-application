@@ -45,7 +45,7 @@ class AppBottomNav extends StatelessWidget {
           color: AppColors.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 15,
               offset: const Offset(0, -4),
             ),
@@ -108,7 +108,7 @@ class AppBottomNav extends StatelessWidget {
   }) {
     final Color selectedColor = AppColors.primary;
     final Color unselectedColor = const Color(0xFF64748B);
-    final Color pillColor = AppColors.tertiary.withOpacity(0.75); 
+    final Color pillColor = AppColors.tertiary.withValues(alpha: 0.75); 
 
     return Expanded(
       child: GestureDetector(
