@@ -7,8 +7,11 @@ class RouteNames {
   static const home = '/home';
   static const catalog = '/catalog';
   static const catalogDetail = '/catalog/:id';
+
   static const simulator = '/simulator';
   static const simulatorSchedule = '/simulator/schedule';
+  static const simulationHistory = '/simulator/history';
+
   static const settings = '/settings';
   static const profile = '/profile';
 }

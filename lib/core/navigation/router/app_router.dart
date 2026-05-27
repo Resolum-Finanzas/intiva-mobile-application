@@ -6,6 +6,10 @@ import '../../../features/shared/presentation/pages/placeholder_page.dart';
 import '../../navigation/widgets/app_bottom_nav.dart';
 import '../../../features/home/presentation/pages/home_page.dart';
 import '../../../features/catalog/presentation/pages/catalog_page.dart';
+import '../../../features/analytics/domain/models/loan_simulation.dart';
+import '../../../features/analytics/presentation/pages/simulator_page.dart';
+import '../../../features/analytics/presentation/pages/payment_plan_page.dart';
+import '../../../features/analytics/presentation/pages/simulation_history_page.dart';
 import '../../../features/iam/login/presentation/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
@@ -51,15 +55,34 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.simulator,
-            builder: (_, _) => const PlaceholderPage(name: 'Simulador'),
+            builder: (_, state) {
+              final extras = state.extra as Map<String, dynamic>;
+              return SimulatorPage(
+                vehicleId: extras['vehicleId'] as String,
+                vehicleName: extras['vehicleName'] as String,
+                vehiclePrice: extras['vehiclePrice'] as double,
+              );
+            },
             routes: [
               GoRoute(
                 path: 'schedule',
-                builder: (_, state) =>
-                    PlaceholderPage(name: 'Programación de pagos'),
+                builder: (_, state) {
+                  final simulation = state.extra as LoanSimulation;
+                  return PaymentPlanPage(simulation: simulation);
+                },
+              ),
+              GoRoute(
+                path: 'history',
+                builder: (_, state) {
+                  final extras = state.extra as Map<String, dynamic>;
+                  return SimulationHistoryPage(
+                    userId: extras['userId'] as int,
+                  );
+                },
               ),
             ],
           ),
+
           GoRoute(
             path: RouteNames.settings,
             builder: (_, _) => const PlaceholderPage(name: 'Configuración'),
