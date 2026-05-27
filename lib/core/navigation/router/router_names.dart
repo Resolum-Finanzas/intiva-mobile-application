@@ -4,7 +4,7 @@ class RouteNames {
   static const signIn = '/sign-in';
   static const signUp = '/sign-up';
 
-  static const home = '/';
+  static const home = '/home';
   static const catalog = '/catalog';
   static const catalogDetail = '/catalog/:id';
   static const simulator = '/simulator';

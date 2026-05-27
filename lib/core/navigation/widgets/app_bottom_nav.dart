@@ -38,64 +38,65 @@ class AppBottomNav extends StatelessWidget {
     final selectedIndex = _currentIndex(context);
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    return Scaffold(
-      body: child,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
-              blurRadius: 15,
-              offset: const Offset(0, -4),
-            ),
-          ],
-        ),
-        padding: EdgeInsets.only(
-          left: 12,
-          right: 12,
-          top: 10,
-          bottom: bottomPadding > 0 ? bottomPadding + 6 : 12,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(
-              context: context,
-              index: 0,
-              icon: Icons.home_outlined,
-              selectedIcon: Icons.home_rounded,
-              label: 'Inicio',
-              isSelected: selectedIndex == 0,
-            ),
-            _buildNavItem(
-              context: context,
-              index: 1,
-              icon: Icons.directions_car_outlined,
-              selectedIcon: Icons.directions_car_rounded,
-              label: 'Catálogo',
-              isSelected: selectedIndex == 1,
-            ),
-            _buildNavItem(
-              context: context,
-              index: 2,
-              icon: Icons.settings_outlined,
-              selectedIcon: Icons.settings_rounded,
-              label: 'Configuración',
-              isSelected: selectedIndex == 2,
-            ),
-            _buildNavItem(
-              context: context,
-              index: 3,
-              icon: Icons.person_outline_rounded,
-              selectedIcon: Icons.person_rounded,
-              label: 'Perfil',
-              isSelected: selectedIndex == 3,
-            ),
-          ],
+    return Column(
+      children: [
+        Expanded(child: child),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 15,
+                offset: const Offset(0, -4),
+              ),
+            ],
+          ),
+          padding: EdgeInsets.only(
+            left: 12,
+            right: 12,
+            top: 10,
+            bottom: bottomPadding > 0 ? bottomPadding + 6 : 12,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                context: context,
+                index: 0,
+                icon: Icons.home_outlined,
+                selectedIcon: Icons.home_rounded,
+                label: 'Inicio',
+                isSelected: selectedIndex == 0,
+              ),
+              _buildNavItem(
+                context: context,
+                index: 1,
+                icon: Icons.directions_car_outlined,
+                selectedIcon: Icons.directions_car_rounded,
+                label: 'Catálogo',
+                isSelected: selectedIndex == 1,
+              ),
+              _buildNavItem(
+                context: context,
+                index: 2,
+                icon: Icons.settings_outlined,
+                selectedIcon: Icons.settings_rounded,
+                label: 'Configuración',
+                isSelected: selectedIndex == 2,
+              ),
+              _buildNavItem(
+                context: context,
+                index: 3,
+                icon: Icons.person_outline_rounded,
+                selectedIcon: Icons.person_rounded,
+                label: 'Perfil',
+                isSelected: selectedIndex == 3,
+              ),
+            ],
+          ),
         ),
       ],
-      ),
     );
   }
 
