@@ -8,6 +8,9 @@ class RouteNames {
   static const catalog = '/catalog';
   static const catalogDetail = '/catalog/:id';
 
+  static const vehicle = '/vehicle';
+  static const vehicleDetail = '/vehicle/:vehicleId';
+
   static const simulator = '/simulator';
   static const simulatorSchedule = '/simulator/schedule';
   static const simulationHistory = '/simulator/history';
