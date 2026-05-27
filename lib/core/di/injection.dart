@@ -14,6 +14,11 @@ import 'package:intiva_mobile_application/features/catalog/data/remote/services/
 import 'package:intiva_mobile_application/features/catalog/data/repositories/vehicle_repository_impl.dart';
 import 'package:intiva_mobile_application/core/network/api/api_endpoints.dart';
 import 'package:intiva_mobile_application/features/catalog/presentation/bloc/catalog_bloc.dart';
+import 'package:intiva_mobile_application/features/analytics/data/remote/services/loan_simulation_service.dart';
+import 'package:intiva_mobile_application/features/analytics/data/repositories/loan_simulation_repository_impl.dart';
+import 'package:intiva_mobile_application/features/analytics/domain/repositories/loan_simulation_repository.dart';
+import 'package:intiva_mobile_application/features/analytics/presentation/bloc/simulator/simulator_bloc.dart';
+import 'package:intiva_mobile_application/features/analytics/presentation/bloc/history/history_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -63,6 +68,26 @@ Future<void> configureDependencies() async {
 
   getIt.registerFactory<CatalogBloc>(
     () => CatalogBloc(getIt<VehicleRepository>()),
+  );
+
+  // Analytics
+  getIt.registerLazySingleton<LoanSimulationService>(
+    () => LoanSimulationService(
+      getIt<DioClient>().dio,
+      baseUrl: ApiEndpoints.baseUrl,
+    ),
+  );
+
+  getIt.registerLazySingleton<LoanSimulationRepository>(
+    () => LoanSimulationRepositoryImpl(getIt<LoanSimulationService>()),
+  );
+
+  getIt.registerFactory<SimulatorBloc>(
+    () => SimulatorBloc(getIt<LoanSimulationRepository>()),
+  );
+
+  getIt.registerFactory<HistoryBloc>(
+    () => HistoryBloc(getIt<LoanSimulationRepository>()),
   );
 
   // Router
