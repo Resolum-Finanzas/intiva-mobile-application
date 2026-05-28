@@ -14,6 +14,10 @@ import 'package:intiva_mobile_application/features/analytics/presentation/bloc/s
 import 'package:intiva_mobile_application/features/catalog/data/repositories/mock_vehicle_repository.dart';
 import 'package:intiva_mobile_application/features/catalog/domain/repositories/vehicle_repository.dart';
 import 'package:intiva_mobile_application/features/catalog/presentation/bloc/catalog_bloc.dart';
+import 'package:intiva_mobile_application/features/communication/data/remote/services/notification_service.dart';
+import 'package:intiva_mobile_application/features/communication/data/repositories/notification_repository_impl.dart';
+import 'package:intiva_mobile_application/features/communication/domain/repositories/notification_repository.dart';
+import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
 import 'package:intiva_mobile_application/features/iam/login/data/repositories/auth_repository_impl.dart';
 import 'package:intiva_mobile_application/features/iam/login/data/services/remote/auth_service.dart';
 import 'package:intiva_mobile_application/features/iam/login/domain/repositories/auth_repository.dart';
@@ -76,6 +80,20 @@ Future<void> configureDependencies() async {
   );
   getIt.registerFactory<HistoryBloc>(
     () => HistoryBloc(getIt<LoanSimulationRepository>()),
+  );
+
+  //Communication
+  getIt.registerLazySingleton<NotificationService>(
+    () => NotificationService(
+      getIt<DioClient>().dio,
+      baseUrl: ApiEndpoints.baseUrl,
+    ),
+  );
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(getIt<NotificationService>()),
+  );
+  getIt.registerFactory<NotificationBloc>(
+    () => NotificationBloc(getIt<NotificationRepository>()),
   );
 
   //Router

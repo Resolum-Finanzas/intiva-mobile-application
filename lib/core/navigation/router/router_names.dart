@@ -17,4 +17,5 @@ class RouteNames {
 
   static const settings = '/settings';
   static const profile = '/profile';
+  static const notifications = '/notifications';
 }
