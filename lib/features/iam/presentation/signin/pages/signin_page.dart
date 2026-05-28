@@ -379,7 +379,7 @@ class _LoginContentState extends State<LoginContent> {
               ),
               GestureDetector(
                 onTap: () {
-                  context.push(RouteNames.register);
+                  context.push(RouteNames.signUp);
                 },
                 child: const Text(
                   'Regístrate',

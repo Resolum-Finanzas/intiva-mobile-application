@@ -9,6 +9,7 @@ import 'package:intiva_mobile_application/features/iam/presentation/signin/pages
 import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_bloc.dart';
 import 'package:intiva_mobile_application/features/iam/presentation/signup/pages/signup_page.dart';
 import 'package:intiva_mobile_application/features/profile/presentation/pages/profile_page.dart';
+import 'package:intiva_mobile_application/features/shared/presentation/pages/configuration_page.dart';
 import '../router/auth_guard.dart';
 import '../router/router_names.dart';
 import '../../../features/shared/presentation/pages/placeholder_page.dart';
@@ -38,7 +39,7 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        path: RouteNames.register,
+        path: RouteNames.signUp,
         builder: (context, _) => BlocProvider(
           create: (_) => getIt<SignupBloc>(),
           child: const RegisterPage(),
@@ -97,8 +98,7 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.settings,
-            builder: (context, state) =>
-                const PlaceholderPage(name: 'Configuración'),
+            builder: (context, state) => const ConfigurationPage(),
           ),
           GoRoute(
             path: RouteNames.profile,

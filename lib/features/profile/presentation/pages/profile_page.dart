@@ -44,19 +44,6 @@ class _ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.neutral,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Perfil',
-          style: TextStyle(
-            fontFamily: 'WorkSans',
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-          ),
-        ),
-      ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           switch (state.status) {
@@ -95,6 +82,21 @@ class _ProfileContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Text(
+                'Perfil',
+                style: TextStyle(
+                  fontFamily: 'WorkSans',
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+          ),
           CircleAvatar(
             radius: 36,
             backgroundColor: primary,
@@ -132,7 +134,7 @@ class _ProfileContent extends StatelessWidget {
                 _ProfileMenuItem(
                   icon: Icons.settings_outlined,
                   label: 'Configuración',
-                  onTap: () => context.push(RouteNames.configuration),
+                  onTap: () => context.push(RouteNames.settings),
                 ),
                 Divider(
                   height: 1,
@@ -161,7 +163,7 @@ class _ProfileContent extends StatelessWidget {
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state.status == AuthStatus.unauthenticated) {
-                context.go(RouteNames.login);
+                context.go(RouteNames.signIn);
               }
             },
             child: Card(
