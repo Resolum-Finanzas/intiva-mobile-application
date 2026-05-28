@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:intiva_mobile_application/core/network/api/resource.dart';
-import 'package:intiva_mobile_application/features/iam/login/domain/models/user.dart';
+import 'package:intiva_mobile_application/features/iam/domain/models/user.dart';
 import 'package:intiva_mobile_application/core/network/api/api_endpoints.dart';
 
 class AuthService {

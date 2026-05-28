@@ -12,7 +12,8 @@ class AuthGuard {
     final hasToken = token != null;
     final isAuthRoute =
         state.matchedLocation == RouteNames.signIn ||
-        state.matchedLocation == RouteNames.signUp;
+        state.matchedLocation == RouteNames.signUp ||
+        state.matchedLocation == RouteNames.register;
     if (!hasToken && !isAuthRoute) return RouteNames.signIn;
     if (hasToken && isAuthRoute) return RouteNames.home;
     return null;

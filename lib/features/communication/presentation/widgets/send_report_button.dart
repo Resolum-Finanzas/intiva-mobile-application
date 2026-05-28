@@ -4,7 +4,8 @@ import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_event.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_state.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_bloc.dart';
+
 
 /// Outlined button that dispatches [SendSimulationReport] to [NotificationBloc].
 ///

@@ -1,5 +1,5 @@
 import 'package:intiva_mobile_application/core/network/api/resource.dart';
-import 'package:intiva_mobile_application/features/iam/login/domain/models/user.dart';
+import 'package:intiva_mobile_application/features/iam/domain/models/user.dart';
 
 /// Repository for authentication-related operations.
 /// This abstract class defines the contract for authentication methods

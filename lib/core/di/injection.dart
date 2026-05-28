@@ -18,16 +18,22 @@ import 'package:intiva_mobile_application/features/communication/data/remote/ser
 import 'package:intiva_mobile_application/features/communication/data/repositories/notification_repository_impl.dart';
 import 'package:intiva_mobile_application/features/communication/domain/repositories/notification_repository.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
-import 'package:intiva_mobile_application/features/iam/login/data/repositories/auth_repository_impl.dart';
-import 'package:intiva_mobile_application/features/iam/login/data/services/remote/auth_service.dart';
-import 'package:intiva_mobile_application/features/iam/login/domain/repositories/auth_repository.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/data/repositories/auth_repository_impl.dart';
+import 'package:intiva_mobile_application/features/iam/data/services/remote/auth_service.dart';
+import 'package:intiva_mobile_application/features/iam/domain/repositories/auth_repository.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/auth_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_bloc.dart';
+import 'package:intiva_mobile_application/features/profile/data/remote/services/user_service.dart';
+import 'package:intiva_mobile_application/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:intiva_mobile_application/features/profile/domain/repositories/profile_repository.dart';
+import 'package:intiva_mobile_application/features/profile/presentation/bloc/profile_bloc.dart';
+
 
 final getIt = GetIt.instance;
 
-/// Configures all dependencies for the application using GetIt.
 Future<void> configureDependencies() async {
-  //Storage 
+  //Storage
   const secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
@@ -54,6 +60,29 @@ Future<void> configureDependencies() async {
   );
   getIt.registerFactory<LoginBloc>(
     () => LoginBloc(repository: getIt<AuthRepository>()),
+  );
+  getIt.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      tokenStorage: getIt<TokenStorage>(),
+      authRepository: getIt<AuthRepository>(),
+    ),
+  );
+  getIt.registerFactory<SignupBloc>(
+    () => SignupBloc(repository: getIt<AuthRepository>()),
+  );
+
+  //Profile
+  getIt.registerLazySingleton<UserService>(
+    () => UserService(
+      getIt<DioClient>().dio,
+      baseUrl: ApiEndpoints.baseUrl,
+    ),
+  );
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(getIt<UserService>()),
+  );
+  getIt.registerFactory<ProfileBloc>(
+    () => ProfileBloc(getIt<ProfileRepository>()),
   );
 
   //Catalog
