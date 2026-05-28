@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intiva_mobile_application/core/di/injection.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/analytics/domain/models/loan_simulation.dart';
 import 'package:intiva_mobile_application/features/analytics/presentation/widgets/balloon_period_card.dart';
 import 'package:intiva_mobile_application/features/analytics/presentation/widgets/financial_metrics_card.dart';
 import 'package:intiva_mobile_application/features/analytics/presentation/widgets/payment_period_card.dart';
+import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
+import 'package:intiva_mobile_application/features/communication/presentation/widgets/send_report_button.dart';
 
 /// Displays the full payment schedule for a completed loan simulation.
 ///
@@ -18,9 +22,11 @@ class PaymentPlanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final schedule = simulation.schedule;
 
-    return Scaffold(
-      backgroundColor: AppColors.neutral,
-      body: CustomScrollView(
+    return BlocProvider(
+      create: (_) => getIt<NotificationBloc>(),
+      child: Scaffold(
+        backgroundColor: AppColors.neutral,
+        body: CustomScrollView(
         slivers: [
           SliverAppBar(
             expandedHeight: 120,
@@ -101,9 +107,18 @@ class PaymentPlanPage extends StatelessWidget {
               ),
             ),
 
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: SendReportButton(simulationId: simulation.id),
+            ),
+          ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),
-    );
+    ),
+  );
   }
 }

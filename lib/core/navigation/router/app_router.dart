@@ -15,6 +15,7 @@ import '../../../features/analytics/presentation/pages/payment_plan_page.dart';
 import '../../../features/analytics/presentation/pages/simulation_history_page.dart';
 import '../../../features/catalog/presentation/pages/catalog_page.dart';
 import '../../../features/catalog/presentation/pages/vehicle_detail_page.dart';
+import '../../../features/communication/presentation/pages/notifications_page.dart';
 
 class AppRouter {
   final AuthGuard _authGuard;
@@ -92,7 +93,17 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.profile,
-            builder: (context, state) => const PlaceholderPage(name: 'Perfil'),
+            builder: (context, state) =>
+                const PlaceholderPage(name: 'Perfil'),
+          ),
+          GoRoute(
+            path: RouteNames.notifications,
+            builder: (context, state) {
+              final userId =
+                  (state.extra as Map<String, dynamic>?)?['userId'] as int? ??
+                      1; // default userId=1 for testing
+              return NotificationsPage(userId: userId);
+            },
           ),
         ],
       ),
