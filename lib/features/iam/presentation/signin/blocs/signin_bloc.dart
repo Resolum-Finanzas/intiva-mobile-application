@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intiva_mobile_application/core/enums/status.dart';
-import 'package:intiva_mobile_application/features/iam/login/domain/repositories/auth_repository.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_event.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_state.dart';
+import 'package:intiva_mobile_application/features/iam/domain/repositories/auth_repository.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_event.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_state.dart';
+
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository repository;

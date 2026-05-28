@@ -4,6 +4,8 @@ class RouteNames {
   static const signIn = '/sign-in';
   static const signUp = '/sign-up';
 
+  static const register = '/register';
+
   static const home = '/home';
   static const catalog = '/catalog';
   static const catalogDetail = '/catalog/:id';
@@ -16,6 +18,14 @@ class RouteNames {
   static const simulationHistory = '/simulator/history';
 
   static const settings = '/settings';
+
+  static const configuration = '/settings';
+
   static const profile = '/profile';
+
   static const notifications = '/notifications';
+
+  static const placeholder = '/placeholder';
+
+  static const login = '/sign-in';
 }

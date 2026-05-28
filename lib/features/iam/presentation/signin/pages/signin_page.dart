@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/core/navigation/router/router_names.dart';
-import '../blocs/login_bloc.dart';
-import '../blocs/login_event.dart';
-import '../blocs/login_state.dart';
+import '../blocs/signin_bloc.dart';
+import '../blocs/signin_event.dart';
+import '../blocs/signin_state.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -379,7 +379,7 @@ class _LoginContentState extends State<LoginContent> {
               ),
               GestureDetector(
                 onTap: () {
-                  context.push(RouteNames.signUp);
+                  context.push(RouteNames.register);
                 },
                 child: const Text(
                   'Regístrate',

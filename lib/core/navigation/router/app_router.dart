@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/blocs/login_bloc.dart';
-import 'package:intiva_mobile_application/features/iam/login/presentation/pages/login_page.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/auth_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/auth_event.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signin/pages/signin_page.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_bloc.dart';
+import 'package:intiva_mobile_application/features/iam/presentation/signup/pages/signup_page.dart';
+import 'package:intiva_mobile_application/features/profile/presentation/pages/profile_page.dart';
 import '../router/auth_guard.dart';
 import '../router/router_names.dart';
 import '../../../features/shared/presentation/pages/placeholder_page.dart';
@@ -16,6 +21,7 @@ import '../../../features/analytics/presentation/pages/simulation_history_page.d
 import '../../../features/catalog/presentation/pages/catalog_page.dart';
 import '../../../features/catalog/presentation/pages/vehicle_detail_page.dart';
 import '../../../features/communication/presentation/pages/notifications_page.dart';
+
 
 class AppRouter {
   final AuthGuard _authGuard;
@@ -32,12 +38,16 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        path: RouteNames.signUp,
-        builder: (_, _) => const CatalogPage(),
+        path: RouteNames.register,
+        builder: (context, _) => BlocProvider(
+          create: (_) => getIt<SignupBloc>(),
+          child: const RegisterPage(),
+        ),
       ),
       ShellRoute(
-        builder: (context, state, child) => Scaffold(
-          body: AppBottomNav(child: child),
+        builder: (context, state, child) => BlocProvider(
+          create: (_) => getIt<AuthBloc>()..add(const AppStarted()),
+          child: Scaffold(body: AppBottomNav(child: child)),
         ),
         routes: [
           GoRoute(
@@ -85,7 +95,6 @@ class AppRouter {
               ),
             ],
           ),
-
           GoRoute(
             path: RouteNames.settings,
             builder: (context, state) =>
@@ -93,17 +102,26 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.profile,
-            builder: (context, state) =>
-                const PlaceholderPage(name: 'Perfil'),
+            builder: (context, state) {
+              final userId =
+                  (state.extra as Map<String, dynamic>?)?['userId'] as int? ??
+                      1;
+              return ProfilePage(userId: userId);
+            },
           ),
           GoRoute(
             path: RouteNames.notifications,
             builder: (context, state) {
               final userId =
                   (state.extra as Map<String, dynamic>?)?['userId'] as int? ??
-                      1; // default userId=1 for testing
+                      1;
               return NotificationsPage(userId: userId);
             },
+          ),
+          GoRoute(
+            path: RouteNames.placeholder,
+            builder: (context, state) =>
+                const PlaceholderPage(name: 'Próximamente'),
           ),
         ],
       ),
