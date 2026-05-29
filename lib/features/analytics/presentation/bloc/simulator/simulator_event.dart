@@ -5,7 +5,6 @@ abstract class SimulatorEvent {}
 class LoadSimulator extends SimulatorEvent {
   final String vehicleId;
   final String vehicleName;
-  /// Base price of the vehicle in USD.
   final double vehiclePrice;
 
   LoadSimulator({

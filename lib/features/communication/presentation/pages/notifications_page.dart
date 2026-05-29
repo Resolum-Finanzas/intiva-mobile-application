@@ -17,15 +17,16 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          getIt<NotificationBloc>()..add(LoadNotifications(userId)),
-      child: const _NotificationsView(),
+      create: (_) => getIt<NotificationBloc>()..add(LoadNotifications(userId)),
+      child: _NotificationsBody(userId: userId),
     );
   }
 }
 
-class _NotificationsView extends StatelessWidget {
-  const _NotificationsView();
+class _NotificationsBody extends StatelessWidget {
+  final int userId;
+
+  const _NotificationsBody({required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +59,7 @@ class _NotificationsView extends StatelessWidget {
                 message: state.message ?? 'An error occurred.',
                 onRetry: () => context
                     .read<NotificationBloc>()
-                    .add(LoadNotifications(
-                      context
-                          .findAncestorWidgetOfExactType<NotificationsPage>()!
-                          .userId,
-                    )),
+                    .add(LoadNotifications(userId)),
               );
             case Status.success:
               return state.notifications.isEmpty
@@ -101,11 +98,7 @@ class _EmptyView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.mail_outline,
-            size: 48,
-            color: AppColors.textHint,
-          ),
+          Icon(Icons.mail_outline, size: 48, color: AppColors.textHint),
           SizedBox(height: 12),
           IntivaText.body(
             'Sin notificaciones aún',
@@ -131,11 +124,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 48,
-              color: AppColors.error,
-            ),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: 12),
             IntivaText.body(
               message,
@@ -144,9 +133,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.primary,
-              ),
+              style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
               label: const Text('Reintentar'),

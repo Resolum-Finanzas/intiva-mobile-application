@@ -48,7 +48,6 @@ class NotificationRepositoryImpl implements NotificationRepository {
     }
   }
 
-  /// Translates a [DioException] into a user-friendly [Exception].
   Exception _mapError(DioException e) => switch (e.type) {
         DioExceptionType.connectionTimeout ||
         DioExceptionType.receiveTimeout =>

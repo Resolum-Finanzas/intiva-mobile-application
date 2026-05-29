@@ -4,7 +4,6 @@ import 'package:intiva_mobile_application/features/analytics/domain/models/simul
 class HistoryState {
   final Status status;
   final List<SimulationSummary> simulations;
-  /// Error message for the UI.
   final String? message;
 
   const HistoryState({

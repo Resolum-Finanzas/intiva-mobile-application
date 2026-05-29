@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
 class GracePeriodSection extends StatelessWidget {
-
   final bool enabled;
   final String gracePeriodType;
   final int gracePeriodMonths;
   final ValueChanged<bool> onEnabledChanged;
   final ValueChanged<String?> onTypeChanged;
   final ValueChanged<String> onMonthsChanged;
+
   static const _types = ['Total', 'Parcial'];
 
   const GracePeriodSection({
@@ -64,28 +64,18 @@ class GracePeriodSection extends StatelessWidget {
                     DropdownButtonFormField<String>(
                       initialValue: gracePeriodType,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 12,
-                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              const BorderSide(color: AppColors.border),
+                          borderSide: const BorderSide(color: AppColors.border),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              const BorderSide(color: AppColors.border),
+                          borderSide: const BorderSide(color: AppColors.border),
                         ),
                       ),
                       items: _types
-                          .map(
-                            (t) => DropdownMenuItem(
-                              value: t,
-                              child: Text(t),
-                            ),
-                          )
+                          .map((t) => DropdownMenuItem(value: t, child: Text(t)))
                           .toList(),
                       onChanged: onTypeChanged,
                     ),
@@ -107,25 +97,18 @@ class GracePeriodSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     TextFormField(
-                      initialValue: gracePeriodMonths == 0
-                          ? ''
-                          : gracePeriodMonths.toString(),
+                      initialValue: gracePeriodMonths == 0 ? '' : gracePeriodMonths.toString(),
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: 'Ej. 3',
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 12,
-                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              const BorderSide(color: AppColors.border),
+                          borderSide: const BorderSide(color: AppColors.border),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide:
-                              const BorderSide(color: AppColors.border),
+                          borderSide: const BorderSide(color: AppColors.border),
                         ),
                       ),
                       onChanged: onMonthsChanged,

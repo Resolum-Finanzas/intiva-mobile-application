@@ -15,9 +15,9 @@ import 'package:intiva_mobile_application/features/profile/presentation/bloc/pro
 import 'package:intiva_mobile_application/features/profile/presentation/bloc/profile_state.dart';
 import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
-/// Entry point for the profile screen.
 class ProfilePage extends StatelessWidget {
   final int userId;
+
   const ProfilePage({super.key, required this.userId});
 
   @override
@@ -50,11 +50,10 @@ class _ProfileView extends StatelessWidget {
             case Status.failure:
               return _ErrorView(
                 message: state.message ?? 'Ocurrió un error',
-                onRetry: () =>
-                    context.read<ProfileBloc>().add(LoadProfile(userId)),
+                onRetry: () => context.read<ProfileBloc>().add(LoadProfile(userId)),
               );
             case Status.success:
-              return _ProfileContent(profile: state.profile!);
+              return _ProfileBody(profile: state.profile!);
           }
         },
       ),
@@ -62,10 +61,38 @@ class _ProfileView extends StatelessWidget {
   }
 }
 
-class _ProfileContent extends StatelessWidget {
+class _ProfileBody extends StatelessWidget {
   final Profile profile;
 
-  const _ProfileContent({required this.profile});
+  const _ProfileBody({required this.profile});
+
+  Widget _profileMenuItem(
+    IconData icon,
+    String label, {
+    Widget? trailing,
+    VoidCallback? onTap,
+  }) {
+    return Builder(
+      builder: (context) {
+        final primary = Theme.of(context).colorScheme.primary;
+        return ListTile(
+          leading: DecoratedBox(
+            decoration: BoxDecoration(
+              color: primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Icon(icon, color: primary, size: 20),
+            ),
+          ),
+          title: IntivaText.body(label),
+          trailing: trailing ?? Icon(Icons.chevron_right, color: Colors.grey[400]),
+          onTap: onTap,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +121,7 @@ class _ProfileContent extends StatelessWidget {
           CircleAvatar(
             radius: 36,
             backgroundColor: primary,
-            child: IntivaText.subtitle(
-              profile.initials,
-              color: Colors.white,
-            ),
+            child: IntivaText.subtitle(profile.initials, color: Colors.white),
           ),
           const SizedBox(height: 12),
           IntivaText.subtitle(profile.username),
@@ -112,42 +136,27 @@ class _ProfileContent extends StatelessWidget {
             ),
             child: Column(
               children: [
-                _ProfileMenuItem(
-                  icon: Icons.badge_outlined,
-                  label: 'ID de Miembro',
-                  trailing: IntivaText.caption(
-                    profile.memberId,
-                    color: Colors.grey[600],
-                  ),
+                _profileMenuItem(
+                  Icons.badge_outlined,
+                  'ID de Miembro',
+                  trailing: IntivaText.caption(profile.memberId, color: Colors.grey[600]),
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[200],
-                  indent: 56,
-                ),
-                _ProfileMenuItem(
-                  icon: Icons.settings_outlined,
-                  label: 'Configuración',
+                Divider(height: 1, color: Colors.grey[200], indent: 56),
+                _profileMenuItem(
+                  Icons.settings_outlined,
+                  'Configuración',
                   onTap: () => context.push(RouteNames.settings),
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[200],
-                  indent: 56,
-                ),
-                _ProfileMenuItem(
-                  icon: Icons.shield_outlined,
-                  label: 'Privacidad y Seguridad',
+                Divider(height: 1, color: Colors.grey[200], indent: 56),
+                _profileMenuItem(
+                  Icons.shield_outlined,
+                  'Privacidad y Seguridad',
                   onTap: () => context.push(RouteNames.placeholder),
                 ),
-                Divider(
-                  height: 1,
-                  color: Colors.grey[200],
-                  indent: 56,
-                ),
-                _ProfileMenuItem(
-                  icon: Icons.help_outline,
-                  label: 'Centro de Ayuda',
+                Divider(height: 1, color: Colors.grey[200], indent: 56),
+                _profileMenuItem(
+                  Icons.help_outline,
+                  'Centro de Ayuda',
                   onTap: () => context.push(RouteNames.placeholder),
                 ),
               ],
@@ -169,49 +178,13 @@ class _ProfileContent extends StatelessWidget {
               ),
               child: ListTile(
                 leading: Icon(Icons.logout, color: Colors.red[700], size: 22),
-                title: IntivaText.body(
-                  'Cerrar Sesión',
-                  color: Colors.red[700],
-                ),
+                title: IntivaText.body('Cerrar Sesión', color: Colors.red[700]),
                 onTap: () => context.read<AuthBloc>().add(const SignOut()),
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ProfileMenuItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Widget? trailing;
-  final VoidCallback? onTap;
-
-  const _ProfileMenuItem({
-    required this.icon,
-    required this.label,
-    this.trailing,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
-
-    return ListTile(
-      leading: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: primary.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(icon, color: primary, size: 20),
-      ),
-      title: IntivaText.body(label),
-      trailing: trailing ?? Icon(Icons.chevron_right, color: Colors.grey[400]),
-      onTap: onTap,
     );
   }
 }

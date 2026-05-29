@@ -17,8 +17,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   ) async {
     emit(const HistoryState(status: Status.loading));
     try {
-      final simulations =
-          await _repository.getSimulationsByUser(event.userId);
+      final simulations = await _repository.getSimulationsByUser(event.userId);
       emit(HistoryState(
         status: Status.success,
         simulations: simulations,

@@ -4,7 +4,6 @@ import 'package:intiva_mobile_application/features/profile/domain/models/profile
 class ProfileState {
   final Status status;
   final Profile? profile;
-  /// Error message for the UI.
   final String? message;
 
   const ProfileState({

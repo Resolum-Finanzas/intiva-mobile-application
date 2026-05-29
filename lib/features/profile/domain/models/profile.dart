@@ -11,7 +11,6 @@ class Profile {
 
   String get memberId => '#INT-${id.toString().padLeft(4, '0')}';
 
-  /// Returns two uppercase initials derived from [username].
   String get initials => username.length >= 2
       ? username.substring(0, 2).toUpperCase()
       : username.toUpperCase();

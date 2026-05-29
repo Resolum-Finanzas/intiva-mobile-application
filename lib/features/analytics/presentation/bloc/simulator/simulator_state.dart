@@ -4,7 +4,6 @@ import 'package:intiva_mobile_application/features/analytics/domain/models/loan_
 class SimulatorState {
   final Status status;
   final LoanSimulation? simulation;
-  /// Error message for the UI.
   final String? message;
 
   const SimulatorState({

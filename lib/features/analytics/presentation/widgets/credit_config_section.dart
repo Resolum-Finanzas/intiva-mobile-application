@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
 class CreditConfigSection extends StatelessWidget {
-
   final String paymentFrequency;
   final int termMonths;
   final double balloonPaymentPercentage;
   final ValueChanged<String?> onFrequencyChanged;
   final ValueChanged<int?> onTermChanged;
   final ValueChanged<String> onBalloonChanged;
+
   static const _frequencies = ['Mensual'];
   static const _terms = [24, 36];
 
@@ -21,6 +21,90 @@ class CreditConfigSection extends StatelessWidget {
     required this.onTermChanged,
     required this.onBalloonChanged,
   });
+
+  Widget _labeledDropdown<T>({
+    required String label,
+    required T value,
+    required List<T> items,
+    required String Function(T) itemLabel,
+    required ValueChanged<T?> onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 6),
+        DropdownButtonFormField<T>(
+          initialValue: value,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+          ),
+          items: items
+              .map((item) => DropdownMenuItem<T>(
+                    value: item,
+                    child: Text(itemLabel(item)),
+                  ))
+              .toList(),
+          onChanged: onChanged,
+        ),
+      ],
+    );
+  }
+
+  Widget _labeledTextField({
+    required String label,
+    String? initialValue,
+    required TextInputType keyboardType,
+    String? hint,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: 6),
+        TextFormField(
+          initialValue: initialValue,
+          keyboardType: keyboardType,
+          decoration: InputDecoration(
+            hintText: hint,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.border),
+            ),
+          ),
+          onChanged: onChanged,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +129,7 @@ class CreditConfigSection extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: _LabeledDropdown<String>(
+              child: _labeledDropdown<String>(
                 label: 'Frecuencia de Pago',
                 value: paymentFrequency,
                 items: _frequencies,
@@ -55,7 +139,7 @@ class CreditConfigSection extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _LabeledDropdown<int>(
+              child: _labeledDropdown<int>(
                 label: 'Plazo del Crédito',
                 value: termMonths,
                 items: _terms,
@@ -66,7 +150,7 @@ class CreditConfigSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        _LabeledTextField(
+        _labeledTextField(
           label: 'Cuota Balloon (%)',
           initialValue: balloonPaymentPercentage == 0
               ? ''
@@ -74,121 +158,6 @@ class CreditConfigSection extends StatelessWidget {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           hint: 'Ej. 30.00',
           onChanged: onBalloonChanged,
-        ),
-      ],
-    );
-  }
-}
-
-/// Internal reusable labeled dropdown.
-class _LabeledDropdown<T> extends StatelessWidget {
-  final String label;
-  final T value;
-  final List<T> items;
-  final String Function(T) itemLabel;
-  final ValueChanged<T?> onChanged;
-
-  const _LabeledDropdown({
-    required this.label,
-    required this.value,
-    required this.items,
-    required this.itemLabel,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        const SizedBox(height: 6),
-        DropdownButtonFormField<T>(
-          initialValue: value,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-          ),
-          items: items
-              .map(
-                (item) => DropdownMenuItem<T>(
-                  value: item,
-                  child: Text(itemLabel(item)),
-                ),
-              )
-              .toList(),
-          onChanged: onChanged,
-        ),
-      ],
-    );
-  }
-}
-
-class _LabeledTextField extends StatelessWidget {
-  final String label;
-  final String? initialValue;
-  final TextInputType keyboardType;
-  final String? hint;
-  final ValueChanged<String> onChanged;
-
-  const _LabeledTextField({
-    required this.label,
-    this.initialValue,
-    required this.keyboardType,
-    this.hint,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        const SizedBox(height: 6),
-        TextFormField(
-          initialValue: initialValue,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            hintText: hint,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-          ),
-          onChanged: onChanged,
         ),
       ],
     );

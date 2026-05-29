@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
 import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
@@ -22,28 +23,35 @@ class SimulationHistoryPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) =>
-              getIt<HistoryBloc>()..add(LoadHistory(userId)),
+          create: (_) => getIt<HistoryBloc>()..add(LoadHistory(userId)),
         ),
         BlocProvider(
           create: (_) => getIt<SimulatorBloc>(),
         ),
       ],
-      child: const _HistoryView(),
+      child: _HistoryBody(userId: userId),
     );
   }
 }
 
-class _HistoryView extends StatelessWidget {
-  const _HistoryView();
+class _HistoryBody extends StatelessWidget {
+  final int userId;
+
+  const _HistoryBody({required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<SimulatorBloc, SimulatorState>(
       listener: (context, state) {
         if (state.status == Status.success) {
-          // Reload history after a successful deletion.
-          // userId is not available here; the parent page should handle reload.
+          context.read<HistoryBloc>().add(LoadHistory(userId));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Simulación eliminada'),
+              backgroundColor: AppColors.secondary,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
         }
         if (state.status == Status.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -89,7 +97,7 @@ class _HistoryView extends StatelessWidget {
                 ),
               Status.success => state.simulations.isEmpty
                   ? const _EmptyState()
-                  : _SimulationList(simulations: state.simulations),
+                  : _SimulationList(simulations: state.simulations, userId: userId),
             };
           },
         ),
@@ -125,28 +133,59 @@ class _EmptyState extends StatelessWidget {
 
 class _SimulationList extends StatelessWidget {
   final List<SimulationSummary> simulations;
+  final int userId;
 
-  const _SimulationList({required this.simulations});
+  const _SimulationList({required this.simulations, required this.userId});
+
+  Widget _infoRow(String label, String value, {bool bold = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.textPrimary,
+              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: simulations.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final sim = simulations[index];
         return Dismissible(
           key: ValueKey(sim.id),
           direction: DismissDirection.endToStart,
-          background: Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 20),
+          background: DecoratedBox(
             decoration: BoxDecoration(
               color: AppColors.error,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.delete_outline, color: Colors.white),
+            child: const Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Icon(Icons.delete_outline, color: Colors.white),
+              ),
+            ),
           ),
           confirmDismiss: (_) async {
             return await showDialog<bool>(
@@ -174,127 +213,60 @@ class _SimulationList extends StatelessWidget {
             );
           },
           onDismissed: (_) {
-            context
-                .read<SimulatorBloc>()
-                .add(DeleteSimulation(sim.id));
+            context.read<SimulatorBloc>().add(DeleteSimulation(sim.id));
           },
-          child: _SimulationSummaryCard(simulation: sim),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.border),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        sim.vehicleName,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      DateFormat('dd/MM/yyyy').format(sim.createdAt),
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _infoRow('Monto Financiado', '\$${sim.financedAmount.toStringAsFixed(2)}'),
+                _infoRow('TEA', '${sim.teaPercentage.toStringAsFixed(2)}%'),
+                _infoRow('Plazo', '${sim.termMonths} meses'),
+                _infoRow(
+                  'Cuota Est.',
+                  '\$${sim.estimatedMonthlyPayment.toStringAsFixed(2)}',
+                  bold: true,
+                ),
+              ],
+            ),
+          ),
         );
       },
-    );
-  }
-}
-
-class _SimulationSummaryCard extends StatelessWidget {
-  final SimulationSummary simulation;
-
-  const _SimulationSummaryCard({required this.simulation});
-
-  @override
-  Widget build(BuildContext context) {
-    final createdStr =
-        '${simulation.createdAt.day.toString().padLeft(2, '0')}/'
-        '${simulation.createdAt.month.toString().padLeft(2, '0')}/'
-        '${simulation.createdAt.year}';
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  simulation.vehicleName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              Text(
-                createdStr,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          _InfoRow(
-            label: 'Monto Financiado',
-            value: '\$${simulation.financedAmount.toStringAsFixed(2)}',
-          ),
-          _InfoRow(
-            label: 'TEA',
-            value: '${simulation.teaPercentage.toStringAsFixed(2)}%',
-          ),
-          _InfoRow(
-            label: 'Plazo',
-            value: '${simulation.termMonths} meses',
-          ),
-          _InfoRow(
-            label: 'Cuota Est.',
-            value:
-                '\$${simulation.estimatedMonthlyPayment.toStringAsFixed(2)}',
-            bold: true,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool bold;
-
-  const _InfoRow({
-    required this.label,
-    required this.value,
-    this.bold = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 13,
-              color: AppColors.textPrimary,
-              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

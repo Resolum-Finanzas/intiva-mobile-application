@@ -53,8 +53,7 @@ class SendReportButton extends StatelessWidget {
             onPressed: isLoading
                 ? null
                 : () {
-                    final email =
-                        context.read<LoginBloc>().state.email;
+                    final email = context.read<LoginBloc>().state.email;
                     context.read<NotificationBloc>().add(
                           SendSimulationReport(
                             simulationId: simulationId,

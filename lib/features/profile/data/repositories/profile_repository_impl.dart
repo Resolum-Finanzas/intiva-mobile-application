@@ -2,7 +2,6 @@ import 'package:intiva_mobile_application/features/profile/data/remote/services/
 import 'package:intiva_mobile_application/features/profile/domain/models/profile.dart';
 import 'package:intiva_mobile_application/features/profile/domain/repositories/profile_repository.dart';
 
-/// [ProfileRepository] backed by [UserService].
 class ProfileRepositoryImpl implements ProfileRepository {
   final UserService _service;
 

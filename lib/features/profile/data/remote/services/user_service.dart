@@ -5,7 +5,6 @@ import 'package:intiva_mobile_application/features/profile/data/remote/models/us
 
 part 'user_service.g.dart';
 
-/// Retrofit service for user-profile related API calls.
 @RestApi(baseUrl: ApiEndpoints.baseUrl)
 abstract class UserService {
   factory UserService(Dio dio, {String baseUrl}) = _UserService;

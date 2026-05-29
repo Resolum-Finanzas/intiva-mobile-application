@@ -9,7 +9,7 @@ abstract class LoanSimulationRepository {
 
   Future<List<SimulationSummary>> getSimulationsByUser(int userId);
 
-  // Triggers backend calculation and returns the simulation with schedule attached.
+  // Returns the simulation with the payment schedule attached.
   Future<LoanSimulation> calculateSchedule(String simulationId);
 
   Future<void> deleteSimulation(String simulationId);

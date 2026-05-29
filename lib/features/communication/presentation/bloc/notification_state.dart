@@ -4,6 +4,8 @@ import 'package:intiva_mobile_application/features/communication/domain/models/n
 class NotificationState {
   final Status status;
   final List<Notification> notifications;
+
+  /// Message shown after a successful send action.
   final String? successMessage;
   final String? message;
 

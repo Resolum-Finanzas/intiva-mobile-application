@@ -26,10 +26,8 @@ class SimulatorBloc extends Bloc<SimulatorEvent, SimulatorState> {
   ) async {
     emit(const SimulatorState(status: Status.loading));
     try {
-      final simulation =
-          await _repository.createSimulation(event.parameters);
-      final withSchedule =
-          await _repository.calculateSchedule(simulation.id);
+      final simulation = await _repository.createSimulation(event.parameters);
+      final withSchedule = await _repository.calculateSchedule(simulation.id);
       emit(SimulatorState(
         status: Status.success,
         simulation: withSchedule,
@@ -49,7 +47,7 @@ class SimulatorBloc extends Bloc<SimulatorEvent, SimulatorState> {
     emit(const SimulatorState(status: Status.loading));
     try {
       await _repository.deleteSimulation(event.simulationId);
-      emit(const SimulatorState(status: Status.initial));
+      emit(const SimulatorState(status: Status.success));
     } catch (e) {
       emit(SimulatorState(
         status: Status.failure,

@@ -7,68 +7,16 @@ class FinancialMetricsCard extends StatelessWidget {
 
   const FinancialMetricsCard({super.key, required this.simulation});
 
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 1.6,
-      children: [
-        _MetricTile(
-          label: 'TEA',
-          value: '${simulation.teaPercentage.toStringAsFixed(2)}%',
-          dark: false,
-        ),
-        _MetricTile(
-          label: 'TCEA',
-          value: '${simulation.tceaPercentage.toStringAsFixed(2)}%',
-          dark: false,
-        ),
-        _MetricTile(
-          label: 'Int. Gracia',
-          value: '\$${simulation.graceInterest.toStringAsFixed(2)}',
-          dark: false,
-        ),
-        _MetricTile(
-          label: 'VAN / TIR',
-          value:
-              '\$${simulation.van.toStringAsFixed(2)} / ${simulation.tir.toStringAsFixed(2)}%',
-          dark: true,
-        ),
-      ],
-    );
-  }
-}
-
-/// Individual metric tile used inside [FinancialMetricsCard].
-class _MetricTile extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool dark;
-
-  const _MetricTile({
-    required this.label,
-    required this.value,
-    required this.dark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _metricTile(String label, String value, {bool dark = false}) {
     final bg = dark ? AppColors.primary : Colors.white;
     final labelColor = dark ? Colors.white70 : AppColors.textSecondary;
     final valueColor = dark ? Colors.white : AppColors.textPrimary;
 
-    return Container(
-      padding: const EdgeInsets.all(14),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(12),
-        border: dark
-            ? null
-            : Border.all(color: AppColors.border),
+        border: dark ? null : Border.all(color: AppColors.border),
         boxShadow: dark
             ? [
                 BoxShadow(
@@ -85,32 +33,57 @@ class _MetricTile extends StatelessWidget {
                 ),
               ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.8,
-              color: labelColor,
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.8,
+                color: labelColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: valueColor,
+            const SizedBox(height: 4),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: valueColor,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      childAspectRatio: 1.6,
+      children: [
+        _metricTile('TEA', '${simulation.teaPercentage.toStringAsFixed(2)}%'),
+        _metricTile('TCEA', '${simulation.tceaPercentage.toStringAsFixed(2)}%'),
+        _metricTile('Int. Gracia', '\$${simulation.graceInterest.toStringAsFixed(2)}'),
+        _metricTile(
+          'VAN / TIR',
+          '\$${simulation.van.toStringAsFixed(2)} / ${simulation.tir.toStringAsFixed(2)}%',
+          dark: true,
+        ),
+      ],
     );
   }
 }
