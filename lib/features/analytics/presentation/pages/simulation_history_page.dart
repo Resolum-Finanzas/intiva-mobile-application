@@ -12,9 +12,6 @@ import 'package:intiva_mobile_application/features/analytics/presentation/bloc/s
 import 'package:intiva_mobile_application/features/analytics/presentation/bloc/simulator/simulator_state.dart';
 import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
-/// Displays the list of past loan simulations for the current user.
-///
-/// [userId] is injected via constructor — never stored in global state.
 class SimulationHistoryPage extends StatelessWidget {
   final int userId;
 

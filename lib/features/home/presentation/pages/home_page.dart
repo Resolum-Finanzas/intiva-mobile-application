@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
 class HomePage extends StatelessWidget {
@@ -68,12 +67,11 @@ class HomePage extends StatelessWidget {
                     'Confianza a través de la precisión\nfinanciera.',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                       height: 1.3,
                     ),
                   ),
                   const SizedBox(height: 24),
-
                   Container(
                     width: double.infinity,
                     height: 190,
@@ -144,12 +142,11 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.divider),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.02),
@@ -189,25 +186,25 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
+                          text: TextSpan(
+                            style: const TextStyle(
                               fontSize: 14,
-                              color: Color(0xFF475569),
+                              color: AppColors.textSecondary,
                               height: 1.5,
                             ),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text:
                                     'Somos tu herramienta definitiva para simular tu próximo crédito vehicular en Perú bajo el método de ',
                               ),
                               TextSpan(
                                 text: 'Compra Inteligente',
                                 style: TextStyle(
-                                  color: AppColors.success,
+                                  color: AppColors.secondary,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text:
                                     '. Calcula tus cuotas de forma precisa y transparente.',
                               ),
@@ -218,12 +215,11 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.divider),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.02),
@@ -246,7 +242,7 @@ class HomePage extends StatelessWidget {
                               ),
                               child: const Icon(
                                 Icons.lightbulb_outline,
-                                color: AppColors.success,
+                                color: AppColors.secondary,
                                 size: 24,
                               ),
                             ),
@@ -272,7 +268,7 @@ class HomePage extends StatelessWidget {
                               'Es un sistema que te permite renovar tu auto cada 2 o 3 años, pagando cuotas hasta un ',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xFF475569),
+                                color: AppColors.textSecondary,
                                 height: 1.5,
                               ),
                             ),
@@ -282,7 +278,7 @@ class HomePage extends StatelessWidget {
                                 vertical: 2,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFBBF7D0),
+                                color: AppColors.secondaryLight,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: const Text(
@@ -290,7 +286,7 @@ class HomePage extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF166534),
+                                  color: AppColors.secondary,
                                 ),
                               ),
                             ),
@@ -298,7 +294,7 @@ class HomePage extends StatelessWidget {
                               ' que un crédito convencional.',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xFF475569),
+                                color: AppColors.textSecondary,
                                 height: 1.5,
                               ),
                             ),
@@ -308,20 +304,19 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-
                   Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFFE2E8F0).withValues(alpha: 0.5),
+                        color: AppColors.divider.withValues(alpha: 0.5),
                       ),
                     ),
                     padding: const EdgeInsets.all(20),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'BENEFICIOS',
                           style: TextStyle(
                             fontSize: 12,
@@ -330,22 +325,21 @@ class HomePage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        _buildBeneficioItem('Simulación en tiempo real'),
-                        const SizedBox(height: 12),
-                        _buildBeneficioItem('Variedad de autos disponibles'),
-                        const SizedBox(height: 12),
-                        _buildBeneficioItem('Transparencia institucional'),
+                        SizedBox(height: 16),
+                        _BeneficioItem(text: 'Simulación en tiempo real'),
+                        SizedBox(height: 12),
+                        _BeneficioItem(text: 'Variedad de autos disponibles'),
+                        SizedBox(height: 12),
+                        _BeneficioItem(text: 'Transparencia institucional'),
                       ],
                     ),
                   ),
                   const SizedBox(height: 24),
-
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.divider),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.02),
@@ -355,10 +349,10 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     padding: const EdgeInsets.all(20),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'CÓMO FUNCIONA',
                           style: TextStyle(
                             fontSize: 12,
@@ -367,20 +361,20 @@ class HomePage extends StatelessWidget {
                             color: AppColors.primary,
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        _buildStepItem(
+                        SizedBox(height: 20),
+                        _StepItem(
                           step: '1',
                           title: 'Elige tu auto',
                           description:
                               'Selecciona un vehículo del catálogo para obtener su precio base.',
                         ),
-                        _buildStepItem(
+                        _StepItem(
                           step: '2',
                           title: 'Configura tu plan',
                           description:
                               'Ajusta los parámetros como cuota inicial, seguros y periodos de gracia.',
                         ),
-                        _buildStepItem(
+                        _StepItem(
                           step: '3',
                           title: 'Recibe un cronograma de pagos',
                           description:
@@ -399,30 +393,48 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildBeneficioItem(String text) {
+class _BeneficioItem extends StatelessWidget {
+  final String text;
+
+  const _BeneficioItem({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.check_circle, color: AppColors.success, size: 20),
+        const Icon(Icons.check_circle, color: AppColors.secondary, size: 20),
         const SizedBox(width: 12),
         Text(
           text,
           style: const TextStyle(
             fontSize: 14,
-            color: Color(0xFF475569),
+            color: AppColors.textSecondary,
             fontWeight: FontWeight.w500,
           ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildStepItem({
-    required String step,
-    required String title,
-    required String description,
-    bool isLast = false,
-  }) {
+class _StepItem extends StatelessWidget {
+  final String step;
+  final String title;
+  final String description;
+  /// Omits the connecting line when true.
+  final bool isLast;
+
+  const _StepItem({
+    required this.step,
+    required this.title,
+    required this.description,
+    this.isLast = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -449,7 +461,7 @@ class HomePage extends StatelessWidget {
               Container(
                 width: 2,
                 height: 40,
-                color: const Color(0xFFE2E8F0),
+                color: AppColors.divider,
                 margin: const EdgeInsets.symmetric(vertical: 4),
               ),
           ],
@@ -474,7 +486,7 @@ class HomePage extends StatelessWidget {
                   description,
                   style: const TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF475569),
+                    color: AppColors.textSecondary,
                     height: 1.4,
                   ),
                 ),

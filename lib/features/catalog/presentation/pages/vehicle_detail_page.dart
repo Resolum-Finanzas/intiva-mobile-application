@@ -11,6 +11,7 @@ import 'package:intiva_mobile_application/features/catalog/domain/models/vehicle
 import 'package:intiva_mobile_application/features/catalog/presentation/bloc/catalog_bloc.dart';
 import 'package:intiva_mobile_application/features/catalog/presentation/bloc/catalog_event.dart';
 import 'package:intiva_mobile_application/features/catalog/presentation/bloc/catalog_state.dart';
+import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
 /// Detail page for a single vehicle.
 ///
@@ -39,15 +40,21 @@ class _DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CatalogBloc, CatalogState>(
       builder: (context, state) {
-        return switch (state.status) {
-          Status.initial || Status.loading => const _LoadingScaffold(),
-          Status.failure => _ErrorScaffold(
+        switch (state.status) {
+          case Status.initial:
+            return const _LoadingScaffold();
+          case Status.loading:
+            return const _LoadingScaffold();
+          case Status.failure:
+            return _ErrorScaffold(
               message: state.message ?? 'No se pudo cargar el vehículo.',
-            ),
-          Status.success when state.selectedVehicle != null =>
-            _VehicleDetailScaffold(vehicle: state.selectedVehicle!),
-          _ => const _LoadingScaffold(),
-        };
+            );
+          case Status.success:
+            if (state.selectedVehicle != null) {
+              return _VehicleDetailScaffold(vehicle: state.selectedVehicle!);
+            }
+            return const _LoadingScaffold();
+        }
       },
     );
   }
@@ -91,10 +98,10 @@ class _ErrorScaffold extends StatelessWidget {
             children: [
               const Icon(Icons.error_outline, size: 56, color: AppColors.error),
               const SizedBox(height: 12),
-              Text(
+              IntivaText.body(
                 message,
+                color: AppColors.textSecondary,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.textSecondary),
               ),
               const SizedBox(height: 20),
               FilledButton(

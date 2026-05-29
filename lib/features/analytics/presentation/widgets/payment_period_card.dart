@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/analytics/domain/models/payment_period.dart';
 
-/// Card displaying the details of a single regular payment period.
-///
-/// White background with period number, date, and all financial fields.
 class PaymentPeriodCard extends StatelessWidget {
-
   final PaymentPeriod period;
 
-  /// Creates a [PaymentPeriodCard].
   const PaymentPeriodCard({super.key, required this.period});
 
   @override

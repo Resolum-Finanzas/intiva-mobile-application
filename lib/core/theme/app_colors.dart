@@ -21,4 +21,8 @@ abstract class AppColors {
   static const Color error = Color(0xFFE53935);
   static const Color warning = Color(0xFFFFB300);
   static const Color success = Color(0xFF2E7D32);
+
+  static const Color textHint = Color(0xFFBDBDBD);
+  static const Color secondaryLight = Color(0xFFBBF7D0);
+  static const Color divider = Color(0xFFE2E8F0);
 }

@@ -16,11 +16,7 @@ import 'package:intiva_mobile_application/features/profile/presentation/bloc/pro
 import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
 /// Entry point for the profile screen.
-///
-/// Provides a [ProfileBloc] scoped to this route and immediately dispatches
-/// [LoadProfile] so the view starts loading as soon as it mounts.
 class ProfilePage extends StatelessWidget {
-
   final int userId;
   const ProfilePage({super.key, required this.userId});
 
@@ -33,8 +29,6 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-/// Private view widget that renders the scaffold and delegates to sub-widgets
-/// based on the current [ProfileState].
 class _ProfileView extends StatelessWidget {
   final int userId;
 
@@ -189,12 +183,7 @@ class _ProfileContent extends StatelessWidget {
   }
 }
 
-/// A reusable menu item row used in the profile page.
-///
-/// Displays an [icon] inside a tinted container, a [label], an optional
-/// [trailing] widget (defaults to a chevron), and an optional [onTap] handler.
 class _ProfileMenuItem extends StatelessWidget {
-
   final IconData icon;
   final String label;
   final Widget? trailing;
@@ -227,11 +216,7 @@ class _ProfileMenuItem extends StatelessWidget {
   }
 }
 
-/// Displays an error message with a retry button.
-///
-/// Shown when [ProfileState.status] is [Status.failure].
 class _ErrorView extends StatelessWidget {
-
   final String message;
   final VoidCallback onRetry;
 

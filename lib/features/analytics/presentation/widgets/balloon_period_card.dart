@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/analytics/domain/models/payment_period.dart';
 
-/// Card displaying the details of a balloon payment period.
-///
-/// Uses a Secondary green (#2E7D32) background at 15% opacity and a
-/// "CUOTA BALÓN" chip with a solid Secondary fill.
 class BalloonPeriodCard extends StatelessWidget {
-
   final PaymentPeriod period;
 
-  /// Creates a [BalloonPeriodCard].
   const BalloonPeriodCard({super.key, required this.period});
 
   @override

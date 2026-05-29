@@ -7,12 +7,9 @@ import 'package:intiva_mobile_application/features/analytics/domain/models/loan_
 import 'package:intiva_mobile_application/features/analytics/domain/models/simulation_summary.dart';
 import 'package:intiva_mobile_application/features/analytics/domain/repositories/loan_simulation_repository.dart';
 
-/// Concrete implementation of [LoanSimulationRepository] backed by [LoanSimulationService].
-///
-/// Maps DTOs to domain models and translates [DioException]s into
 class LoanSimulationRepositoryImpl implements LoanSimulationRepository {
-
   final LoanSimulationService _service;
+
   LoanSimulationRepositoryImpl(this._service);
 
   @override
@@ -82,7 +79,6 @@ class LoanSimulationRepositoryImpl implements LoanSimulationRepository {
     }
   }
 
-  /// Maps a [SimulationSummaryDto] to the domain [SimulationSummary] model.
   SimulationSummary _summaryToDomain(SimulationSummaryDto dto) =>
       SimulationSummary(
         id: dto.id,
@@ -94,7 +90,6 @@ class LoanSimulationRepositoryImpl implements LoanSimulationRepository {
         createdAt: DateTime.parse(dto.createdAt),
       );
 
-  /// Translates a [DioException] into a user-friendly [Exception].
   Exception _mapError(DioException e) => switch (e.type) {
         DioExceptionType.connectionTimeout ||
         DioExceptionType.receiveTimeout =>

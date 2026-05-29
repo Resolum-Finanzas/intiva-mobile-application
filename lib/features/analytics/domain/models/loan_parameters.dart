@@ -1,10 +1,4 @@
-/// Encapsulates all user-configurable parameters for a loan simulation request.
-///
-/// This value object is built from the simulator form and passed to the
-/// repository to create a new simulation. No financial computation is
-/// performed here — all math is delegated to the backend.
 class LoanParameters {
-
   final String vehicleId;
   final String vehicleName;
   final double vehiclePrice;
@@ -21,7 +15,6 @@ class LoanParameters {
   final int? gracePeriodMonths;
   final DateTime loanStartDate;
 
-  /// Creates a [LoanParameters] instance with all required fields.
   const LoanParameters({
     required this.vehicleId,
     required this.vehicleName,
@@ -40,7 +33,6 @@ class LoanParameters {
     required this.loanStartDate,
   });
 
-  /// Returns the financed amount derived from [vehiclePrice] and [initialPaymentPercentage].
   double get financedAmount =>
       vehiclePrice * (1 - initialPaymentPercentage / 100);
 }

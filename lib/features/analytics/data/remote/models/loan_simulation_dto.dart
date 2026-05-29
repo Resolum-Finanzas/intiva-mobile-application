@@ -24,7 +24,6 @@ class LoanSimulationDto {
   final String createdAt;
   final PaymentScheduleDto? schedule;
 
-  /// Creates a [LoanSimulationDto] with all required fields.
   const LoanSimulationDto({
     required this.id,
     required this.vehicleId,
@@ -43,14 +42,11 @@ class LoanSimulationDto {
     this.schedule,
   });
 
-  /// Creates a [LoanSimulationDto] from a JSON map.
   factory LoanSimulationDto.fromJson(Map<String, dynamic> json) =>
       _$LoanSimulationDtoFromJson(json);
 
-  /// Converts this instance to a JSON map.
   Map<String, dynamic> toJson() => _$LoanSimulationDtoToJson(this);
 
-  /// Maps this DTO to the domain [LoanSimulation] model.
   LoanSimulation toDomain() => LoanSimulation(
         id: id,
         vehicleId: vehicleId,

@@ -3,15 +3,9 @@ import 'package:intiva_mobile_application/features/communication/data/remote/ser
 import 'package:intiva_mobile_application/features/communication/domain/models/notification.dart';
 import 'package:intiva_mobile_application/features/communication/domain/repositories/notification_repository.dart';
 
-/// Concrete implementation of [NotificationRepository] backed by [NotificationService].
-///
-/// Converts DTOs to domain models and maps [DioException]s to typed
-/// user-friendly [Exception]s.
 class NotificationRepositoryImpl implements NotificationRepository {
-
   final NotificationService _service;
 
-  /// Creates a [NotificationRepositoryImpl] with the given [service].
   NotificationRepositoryImpl(this._service);
 
   @override

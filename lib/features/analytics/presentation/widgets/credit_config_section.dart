@@ -12,7 +12,6 @@ class CreditConfigSection extends StatelessWidget {
   static const _frequencies = ['Mensual'];
   static const _terms = [24, 36];
 
-  /// Creates a [CreditConfigSection].
   const CreditConfigSection({
     super.key,
     required this.paymentFrequency,

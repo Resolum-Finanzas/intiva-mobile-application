@@ -9,11 +9,7 @@ import 'package:intiva_mobile_application/features/analytics/presentation/widget
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/widgets/send_report_button.dart';
 
-/// Displays the full payment schedule for a completed loan simulation.
-///
-/// Receives a [LoanSimulation] (with a populated schedule) via GoRouter extras.
 class PaymentPlanPage extends StatelessWidget {
-
   final LoanSimulation simulation;
 
   const PaymentPlanPage({super.key, required this.simulation});

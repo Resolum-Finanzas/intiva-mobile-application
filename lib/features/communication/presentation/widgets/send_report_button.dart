@@ -1,45 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_event.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_state.dart';
 import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_bloc.dart';
 
-
-/// Outlined button that dispatches [SendSimulationReport] to [NotificationBloc].
-///
-/// Reads the recipient email from [LoginBloc] state — no extra API call needed.
-/// Shows a [CircularProgressIndicator] while loading and a [SnackBar] on
-/// success or failure.
-///
-/// Place this widget inside a [BlocProvider<NotificationBloc>] scope, typically
-/// at the bottom of [PaymentPlanPage].
 class SendReportButton extends StatelessWidget {
-  /// The ID of the simulation whose report will be sent.
   final String simulationId;
 
-  /// Creates a [SendReportButton].
   const SendReportButton({super.key, required this.simulationId});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NotificationBloc, NotificationState>(
       listenWhen: (prev, curr) =>
-          curr is NotificationSuccess || curr is NotificationError,
+          curr.status == Status.success || curr.status == Status.failure,
       listener: (context, state) {
-        if (state is NotificationSuccess) {
+        if (state.status == Status.success && state.successMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
+              content: Text(state.successMessage!),
               backgroundColor: AppColors.accent,
               behavior: SnackBarBehavior.floating,
             ),
           );
-        } else if (state is NotificationError) {
+        } else if (state.status == Status.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.message),
+              content: Text(state.message ?? 'An error occurred.'),
               backgroundColor: AppColors.error,
               behavior: SnackBarBehavior.floating,
             ),
@@ -47,7 +37,7 @@ class SendReportButton extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final isLoading = state is NotificationLoading;
+        final isLoading = state.status == Status.loading;
 
         return SizedBox(
           width: double.infinity,

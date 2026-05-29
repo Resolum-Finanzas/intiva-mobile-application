@@ -14,17 +14,11 @@ import 'package:intiva_mobile_application/features/analytics/presentation/widget
 import 'package:intiva_mobile_application/features/analytics/presentation/widgets/grace_period_section.dart';
 import 'package:intiva_mobile_application/features/analytics/presentation/widgets/vehicle_price_header.dart';
 
-/// Entry point for the loan simulator screen.
-///
-/// Requires [vehicleId], [vehicleName], and [vehiclePrice] injected via
-/// GoRouter extras — never stored in global state.
 class SimulatorPage extends StatelessWidget {
-
   final String vehicleId;
   final String vehicleName;
   final double vehiclePrice;
 
-  /// Creates a [SimulatorPage].
   const SimulatorPage({
     super.key,
     required this.vehicleId,

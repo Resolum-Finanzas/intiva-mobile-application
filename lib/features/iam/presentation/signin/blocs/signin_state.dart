@@ -1,6 +1,5 @@
 import 'package:intiva_mobile_application/core/enums/status.dart';
 
-/// Represents the state of the login process.
 class LoginState {
   final Status status;
   final String email;
@@ -8,7 +7,6 @@ class LoginState {
   final bool isPasswordVisible;
   final String? message;
 
-  /// Constructs a LoginState with optional parameters.
   const LoginState({
     this.status = Status.initial,
     this.email = '',
@@ -17,21 +15,21 @@ class LoginState {
     this.message,
   });
 
-  /// Creates a copy of the current LoginState with optional new values.
-  /// If a parameter is not provided, the current value is retained.
+  static const _absent = Object();
+
   LoginState copyWith({
     Status? status,
     String? email,
     String? password,
     bool? isPasswordVisible,
-    String? message,
+    Object? message = _absent,
   }) {
     return LoginState(
       status: status ?? this.status,
       email: email ?? this.email,
       password: password ?? this.password,
       isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
-      message: message ?? this.message,
+      message: message == _absent ? this.message : message as String?,
     );
   }
 }

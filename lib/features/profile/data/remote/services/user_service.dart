@@ -8,10 +8,8 @@ part 'user_service.g.dart';
 /// Retrofit service for user-profile related API calls.
 @RestApi(baseUrl: ApiEndpoints.baseUrl)
 abstract class UserService {
-  /// Creates a [UserService] backed by the given [dio] client.
   factory UserService(Dio dio, {String baseUrl}) = _UserService;
 
-  /// Fetches the authenticated user's profile from [ApiEndpoints.profile].
   @GET(ApiEndpoints.profile)
   Future<UserDto> getUserProfile();
 }

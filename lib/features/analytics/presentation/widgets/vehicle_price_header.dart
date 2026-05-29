@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
-/// Top card displayed on the simulator page showing the vehicle price and name.
-///
-/// Uses a Primary (#1A237E) background with white typography.
 class VehiclePriceHeader extends StatelessWidget {
-
   final double vehiclePrice;
   final String vehicleName;
 
-  /// Creates a [VehiclePriceHeader].
   const VehiclePriceHeader({
     super.key,
     required this.vehiclePrice,

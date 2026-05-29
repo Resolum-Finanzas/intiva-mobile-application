@@ -5,15 +5,10 @@ import 'package:intiva_mobile_application/features/iam/domain/repositories/auth_
 import 'auth_event.dart';
 import 'auth_state.dart';
 
-/// BLoC that manages the global authentication state of the application.
-///
-/// Handles [AppStarted] (token check on launch), [SignUp] (registration),
-/// and [SignOut] (logout + token deletion).
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final TokenStorage _tokenStorage;
   final AuthRepository _authRepository;
 
-  /// Creates an [AuthBloc] with the required [tokenStorage] and [authRepository].
   AuthBloc({
     required TokenStorage tokenStorage,
     required AuthRepository authRepository,
@@ -25,7 +20,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignUp>(_onSignUp);
   }
 
-  /// Checks for a stored token and emits [authenticated] or [unauthenticated].
   Future<void> _onAppStarted(
     AppStarted event,
     Emitter<AuthState> emit,
@@ -40,7 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  /// Deletes the stored token and emits [unauthenticated].
   Future<void> _onSignOut(
     SignOut event,
     Emitter<AuthState> emit,
@@ -49,9 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 
-  /// Calls the repository to register a new user.
-  ///
-  /// Emits [loading] → [authenticated] on success, or [error] on failure.
   Future<void> _onSignUp(
     SignUp event,
     Emitter<AuthState> emit,

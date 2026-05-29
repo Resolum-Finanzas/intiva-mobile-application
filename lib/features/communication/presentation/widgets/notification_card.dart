@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart' hide Notification;
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/communication/domain/models/notification.dart';
-import 'package:intiva_mobile_application/features/communication/domain/models/notification_status.dart';
+import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
-/// Card widget displaying a single [Notification] in the notifications list.
-///
-/// Shows a status icon, subject, recipient email, relative date, and a
-/// colour-coded status badge pill.
 class NotificationCard extends StatelessWidget {
-  /// The notification to display.
   final Notification notification;
 
-  /// Creates a [NotificationCard].
   const NotificationCard({super.key, required this.notification});
 
   @override
@@ -44,31 +38,22 @@ class NotificationCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                IntivaText.body(
                   notification.subject,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF1A1A1A),
-                  ),
+                  color: AppColors.textPrimary,
                   maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 3),
-                Text(
+                IntivaText.caption(
                   '${notification.emailAddress} · ${_relativeDate(notification.createdAt)}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF757575),
-                  ),
+                  color: AppColors.textSecondary,
                 ),
               ],
             ),
           ),
           const SizedBox(width: 10),
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: badgeColor,
               borderRadius: BorderRadius.circular(20),
@@ -87,7 +72,6 @@ class NotificationCard extends StatelessWidget {
     );
   }
 
-  /// Returns the icon and colour for the given [status].
   (IconData, Color) _iconForStatus(NotificationStatus status) =>
       switch (status) {
         NotificationStatus.sent => (
@@ -96,23 +80,21 @@ class NotificationCard extends StatelessWidget {
           ),
         NotificationStatus.pending => (
             Icons.access_time_outlined,
-            const Color(0xFFF9A825),
+            AppColors.warning,
           ),
         NotificationStatus.failed => (
             Icons.error_outline,
-            const Color(0xFFB00020),
+            AppColors.error,
           ),
       };
 
-  /// Returns the badge label and background colour for the given [status].
   (String, Color) _badgeForStatus(NotificationStatus status) =>
       switch (status) {
         NotificationStatus.sent => ('Enviado', AppColors.accent),
-        NotificationStatus.pending => ('Pendiente', const Color(0xFFF9A825)),
-        NotificationStatus.failed => ('Fallido', const Color(0xFFB00020)),
+        NotificationStatus.pending => ('Pendiente', AppColors.warning),
+        NotificationStatus.failed => ('Fallido', AppColors.error),
       };
 
-  /// Returns a human-readable relative date string (e.g. "hace 2 días").
   String _relativeDate(DateTime date) {
     final diff = DateTime.now().difference(date);
     if (diff.inMinutes < 1) return 'ahora mismo';

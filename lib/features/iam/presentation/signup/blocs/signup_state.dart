@@ -1,8 +1,6 @@
 import 'package:intiva_mobile_application/core/enums/status.dart';
 
-/// Represents the state of the signup / registration form.
 class SignupState {
-
   final Status status;
   final String username;
   final String email;
@@ -12,7 +10,6 @@ class SignupState {
   final bool isPasswordLongEnough;
   final String? message;
 
-  /// Creates a [SignupState].
   const SignupState({
     this.status = Status.initial,
     this.username = '',
@@ -24,14 +21,14 @@ class SignupState {
     this.message,
   });
 
-  /// Returns `true` when all required fields are filled and valid.
   bool get isFormValid =>
       username.isNotEmpty &&
       email.isNotEmpty &&
       isEmailValid &&
       isPasswordLongEnough;
 
-  /// Creates a copy of this state with updated fields.
+  static const _absent = Object();
+
   SignupState copyWith({
     Status? status,
     String? username,
@@ -40,7 +37,7 @@ class SignupState {
     bool? isPasswordVisible,
     bool? isEmailValid,
     bool? isPasswordLongEnough,
-    String? message,
+    Object? message = _absent,
   }) {
     return SignupState(
       status: status ?? this.status,
@@ -50,7 +47,7 @@ class SignupState {
       isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
       isEmailValid: isEmailValid ?? this.isEmailValid,
       isPasswordLongEnough: isPasswordLongEnough ?? this.isPasswordLongEnough,
-      message: message ?? this.message,
+      message: message == _absent ? this.message : message as String?,
     );
   }
 }

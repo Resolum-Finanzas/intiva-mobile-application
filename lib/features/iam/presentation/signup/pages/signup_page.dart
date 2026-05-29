@@ -8,12 +8,7 @@ import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs
 import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_event.dart';
 import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_state.dart';
 
-/// Entry point for the registration screen.
-///
-/// Provides a [SignupBloc] scoped to this route and delegates rendering
-/// to [_SignupContent].
 class RegisterPage extends StatelessWidget {
-
   const RegisterPage({super.key});
 
   @override
@@ -353,9 +348,6 @@ class _SignupContentState extends State<_SignupContent> {
   }
 }
 
-/// A reusable styled text field that matches the Intiva sign-in design.
-///
-/// Wraps [TextField] with consistent border, fill, label, and hint styling.
 class _FormField extends StatelessWidget {
   final String label;
   final String? hint;

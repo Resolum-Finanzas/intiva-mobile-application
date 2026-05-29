@@ -4,18 +4,13 @@ import 'package:intiva_mobile_application/features/profile/domain/repositories/p
 import 'profile_event.dart';
 import 'profile_state.dart';
 
-/// BLoC that manages the profile feature state.
-///
-/// Handles [LoadProfile] by fetching the user's profile from [ProfileRepository].
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepository _repository;
 
-  /// Creates a [ProfileBloc] with the given [ProfileRepository].
   ProfileBloc(this._repository) : super(const ProfileState()) {
     on<LoadProfile>(_onLoadProfile);
   }
 
-  /// Handles [LoadProfile]: emits loading, then success or failure.
   Future<void> _onLoadProfile(
     LoadProfile event,
     Emitter<ProfileState> emit,

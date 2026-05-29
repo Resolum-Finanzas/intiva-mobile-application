@@ -1,30 +1,29 @@
 import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/features/profile/domain/models/profile.dart';
 
-/// Represents the state of the profile feature.
 class ProfileState {
-
   final Status status;
   final Profile? profile;
+  /// Error message for the UI.
   final String? message;
 
-  /// Creates a [ProfileState].
   const ProfileState({
     this.status = Status.initial,
     this.profile,
     this.message,
   });
 
-  /// Creates a copy of this state with updated fields.
+  static const _absent = Object();
+
   ProfileState copyWith({
     Status? status,
     Profile? profile,
-    String? message,
+    Object? message = _absent,
   }) {
     return ProfileState(
       status: status ?? this.status,
       profile: profile ?? this.profile,
-      message: message ?? this.message,
+      message: message == _absent ? this.message : message as String?,
     );
   }
 }

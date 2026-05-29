@@ -2,9 +2,7 @@ import 'package:intiva_mobile_application/features/communication/domain/models/n
 
 export 'notification_status.dart';
 
-/// Domain model representing a notification sent to a user.
 class Notification {
-
   final String id;
   final String emailAddress;
   final String subject;
@@ -14,7 +12,6 @@ class Notification {
   final NotificationStatus status;
   final DateTime createdAt;
 
-  /// Creates a [Notification] with all required fields.
   const Notification({
     required this.id,
     required this.emailAddress,

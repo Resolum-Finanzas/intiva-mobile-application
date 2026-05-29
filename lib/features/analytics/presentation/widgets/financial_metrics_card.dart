@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/analytics/domain/models/loan_simulation.dart';
 
-/// 2×2 grid of financial metric cards shown on the payment plan page.
-///
-/// Displays TEA, TCEA, Grace Interest, and VAN/TIR.
 class FinancialMetricsCard extends StatelessWidget {
-
   final LoanSimulation simulation;
 
-  /// Creates a [FinancialMetricsCard].
   const FinancialMetricsCard({super.key, required this.simulation});
 
   @override

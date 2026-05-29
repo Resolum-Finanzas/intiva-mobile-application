@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'payment_period_dto.g.dart';
 
-/// Data Transfer Object representing a single payment period in a loan schedule.
 @JsonSerializable()
 class PaymentPeriodDto {
   final int periodNumber;
@@ -18,7 +17,6 @@ class PaymentPeriodDto {
   final bool isBalloon;
   final bool isGracePeriod;
 
-  /// Creates a [PaymentPeriodDto] with all required fields.
   const PaymentPeriodDto({
     required this.periodNumber,
     required this.paymentDate,
@@ -34,10 +32,8 @@ class PaymentPeriodDto {
     required this.isGracePeriod,
   });
 
-  /// Creates a [PaymentPeriodDto] from a JSON map.
   factory PaymentPeriodDto.fromJson(Map<String, dynamic> json) =>
       _$PaymentPeriodDtoFromJson(json);
 
-  /// Converts this instance to a JSON map.
   Map<String, dynamic> toJson() => _$PaymentPeriodDtoToJson(this);
 }

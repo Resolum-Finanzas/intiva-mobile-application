@@ -19,6 +19,7 @@ class CreateLoanSimulationDto {
   final String? gracePeriodType;
   final int? gracePeriodMonths;
   final String loanStartDate;
+
   const CreateLoanSimulationDto({
     required this.vehicleId,
     required this.vehicleName,
@@ -36,7 +37,9 @@ class CreateLoanSimulationDto {
     this.gracePeriodMonths,
     required this.loanStartDate,
   });
+
   factory CreateLoanSimulationDto.fromJson(Map<String, dynamic> json) =>
       _$CreateLoanSimulationDtoFromJson(json);
+
   Map<String, dynamic> toJson() => _$CreateLoanSimulationDtoToJson(this);
 }

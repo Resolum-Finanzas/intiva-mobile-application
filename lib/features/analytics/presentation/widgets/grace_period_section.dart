@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
-/// Collapsible section for configuring the grace period.
-///
-/// When the toggle is enabled, the user can select the grace period type
-/// ("Total" / "Parcial") and duration in months.
 class GracePeriodSection extends StatelessWidget {
 
   final bool enabled;
@@ -15,7 +11,6 @@ class GracePeriodSection extends StatelessWidget {
   final ValueChanged<String> onMonthsChanged;
   static const _types = ['Total', 'Parcial'];
 
-  /// Creates a [GracePeriodSection].
   const GracePeriodSection({
     super.key,
     required this.enabled,

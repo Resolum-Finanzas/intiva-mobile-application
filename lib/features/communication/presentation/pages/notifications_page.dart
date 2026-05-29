@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intiva_mobile_application/core/di/injection.dart';
+import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_bloc.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_event.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/bloc/notification_state.dart';
 import 'package:intiva_mobile_application/features/communication/presentation/widgets/notification_card.dart';
+import 'package:intiva_mobile_application/features/shared/presentation/widgets/intiva_text.dart';
 
-/// Page that displays the notification history for the current user.
-///
-/// Provides a [NotificationBloc] and immediately dispatches [LoadNotifications].
-/// Shows an empty state when there are no notifications, or a [ListView] of
-/// [NotificationCard] widgets when loaded.
 class NotificationsPage extends StatelessWidget {
-
   final int userId;
 
-  /// Creates a [NotificationsPage].
   const NotificationsPage({super.key, required this.userId});
 
   @override
@@ -51,35 +46,47 @@ class _NotificationsView extends StatelessWidget {
       ),
       body: BlocBuilder<NotificationBloc, NotificationState>(
         builder: (context, state) {
-          return switch (state) {
-            NotificationInitial() => const SizedBox.shrink(),
-            NotificationLoading() => const Center(
+          switch (state.status) {
+            case Status.initial:
+              return const SizedBox.shrink();
+            case Status.loading:
+              return const Center(
                 child: CircularProgressIndicator(color: AppColors.primary),
-              ),
-            NotificationError(:final message) => _ErrorView(
-                message: message,
+              );
+            case Status.failure:
+              return _ErrorView(
+                message: state.message ?? 'An error occurred.',
                 onRetry: () => context
                     .read<NotificationBloc>()
                     .add(LoadNotifications(
-                      (context.findAncestorWidgetOfExactType<
-                                  NotificationsPage>()
-                              as NotificationsPage)
+                      context
+                          .findAncestorWidgetOfExactType<NotificationsPage>()!
                           .userId,
                     )),
-              ),
-            NotificationsLoaded(:final notifications) =>
-              notifications.isEmpty
+              );
+            case Status.success:
+              return state.notifications.isEmpty
                   ? const _EmptyView()
-                  : ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      itemCount: notifications.length,
-                      itemBuilder: (context, index) => NotificationCard(
-                        notification: notifications[index],
-                      ),
-                    ),
-            NotificationSuccess() => const SizedBox.shrink(),
-          };
+                  : _NotificationList(notifications: state.notifications);
+          }
         },
+      ),
+    );
+  }
+}
+
+class _NotificationList extends StatelessWidget {
+  final List notifications;
+
+  const _NotificationList({required this.notifications});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      itemCount: notifications.length,
+      itemBuilder: (context, index) => NotificationCard(
+        notification: notifications[index],
       ),
     );
   }
@@ -97,16 +104,12 @@ class _EmptyView extends StatelessWidget {
           Icon(
             Icons.mail_outline,
             size: 48,
-            color: Color(0xFFBDBDBD),
+            color: AppColors.textHint,
           ),
           SizedBox(height: 12),
-          Text(
+          IntivaText.body(
             'Sin notificaciones aún',
-            style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF757575),
-              fontFamily: 'Inter',
-            ),
+            color: AppColors.textSecondary,
           ),
         ],
       ),
@@ -134,13 +137,10 @@ class _ErrorView extends StatelessWidget {
               color: AppColors.error,
             ),
             const SizedBox(height: 12),
-            Text(
+            IntivaText.body(
               message,
+              color: AppColors.textSecondary,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
             ),
             const SizedBox(height: 20),
             FilledButton.icon(
