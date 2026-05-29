@@ -7,6 +7,8 @@ abstract class AppColors {
   static const Color accent = Color(0xFF2E7D32);
   static const Color accentLight = Color(0xFF4CAF50);
 
+  static const Color secondary = accent;
+
   static const Color tertiary = Color(0xFFC5CAE9);
   static const Color neutral = Color(0xFFF5F5F5);
 

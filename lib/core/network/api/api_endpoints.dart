@@ -17,4 +17,18 @@ abstract class ApiEndpoints {
 
   // Profiles
   static const String profile = '/users/me';
+
+  // Simulations
+  static const String simulationById = '/simulations/{id}';
+  static const String simulationsByUser = '/simulations/user/{userId}';
+  static const String simulationSchedule = '/simulations/{id}/schedule';
+
+  // Notifications
+  static const String notifications = '/notifications';
+  static const String notificationsByUser = '/notifications/user/{userId}';
+  static const String simulationReport = '/notifications/simulation-report';
+  static const String paymentReminder = '/notifications/payment-reminder';
+
+  // Bank rates
+  static const String bankRateConfig = '/bank-rates/{bankEntity}';
 }
