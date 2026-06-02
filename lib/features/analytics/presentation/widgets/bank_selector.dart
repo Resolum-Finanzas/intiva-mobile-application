@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intiva_mobile_application/core/theme/app_colors.dart';
 
-/// Horizontal chip group for selecting a bank entity.
-///
-/// The selected chip uses a Primary (#1A237E) fill with white text;
-/// unselected chips use a white fill with Primary text and a border.
 class BankSelector extends StatelessWidget {
-
   final String? selectedBank;
   final ValueChanged<String> onBankSelected;
 
   static const _banks = ['BCP', 'BBVA', 'Interbank'];
 
-  /// Creates a [BankSelector].
   const BankSelector({
     super.key,
     required this.selectedBank,
@@ -49,9 +43,7 @@ class BankSelector extends StatelessWidget {
                   color: isSelected ? AppColors.primary : Colors.white,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.border,
+                    color: isSelected ? AppColors.primary : AppColors.border,
                   ),
                 ),
                 child: Text(

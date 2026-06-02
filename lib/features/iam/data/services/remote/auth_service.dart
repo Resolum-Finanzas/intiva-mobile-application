@@ -6,16 +6,11 @@ import 'package:intiva_mobile_application/features/iam/domain/models/user.dart';
 import 'package:intiva_mobile_application/core/network/api/api_endpoints.dart';
 
 class AuthService {
-  /// Logs in a user with the provided [email] and [password].
-  /// Returns a [User] instance upon successful login.
-  /// Throws an [HttpException] for non-200 HTTP responses,
-  /// a [SocketException] for network issues,
-  /// and a [FormatException] for JSON parsing errors.
   Future<User> login(String email, String password) async {
     try {
-      final Uri uri = Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.signIn);
+      final uri = Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.signIn);
 
-      final http.Response response = await http.post(
+      final response = await http.post(
         uri,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
@@ -35,9 +30,6 @@ class AuthService {
     }
   }
 
-  /// Registers a new user with the provided details.
-  /// Returns a [Resource<String>] containing a success message upon successful registration.
-  /// Throws an [HttpException] for non-200 HTTP responses.
   Future<Resource<String>> register(
     String name,
     String email,
@@ -45,9 +37,9 @@ class AuthService {
     String role,
     String businessName,
   ) async {
-    final Uri uri = Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.signUp);
+    final uri = Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.signUp);
 
-    final http.Response response = await http.post(
+    final response = await http.post(
       uri,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({

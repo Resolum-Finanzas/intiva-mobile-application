@@ -5,11 +5,10 @@ import 'package:intiva_mobile_application/features/iam/domain/repositories/auth_
 import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_event.dart';
 import 'package:intiva_mobile_application/features/iam/presentation/signin/blocs/signin_state.dart';
 
-
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository repository;
 
-  LoginBloc({required this.repository}) : super(LoginState()) {
+  LoginBloc({required this.repository}) : super(const LoginState()) {
     on<OnEmailChanged>(
       (event, emit) => emit(state.copyWith(email: event.email)),
     );
@@ -20,7 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (event, emit) =>
           emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible)),
     );
-
     on<Login>(_onLogin);
   }
 
@@ -33,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(
         state.copyWith(
           status: Status.failure,
-          message: "Login failed. Please check your credentials and try again.",
+          message: 'Login failed. Please check your credentials and try again.',
         ),
       );
     }

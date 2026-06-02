@@ -1,6 +1,4 @@
-/// Lightweight summary of a loan simulation, used in history lists.
 class SimulationSummary {
-
   final String id;
   final String vehicleName;
   final double financedAmount;
@@ -9,7 +7,6 @@ class SimulationSummary {
   final double estimatedMonthlyPayment;
   final DateTime createdAt;
 
-  /// Creates a [SimulationSummary] with all required fields.
   const SimulationSummary({
     required this.id,
     required this.vehicleName,

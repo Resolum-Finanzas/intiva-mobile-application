@@ -8,12 +8,7 @@ import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs
 import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_event.dart';
 import 'package:intiva_mobile_application/features/iam/presentation/signup/blocs/signup_state.dart';
 
-/// Entry point for the registration screen.
-///
-/// Provides a [SignupBloc] scoped to this route and delegates rendering
-/// to [_SignupContent].
 class RegisterPage extends StatelessWidget {
-
   const RegisterPage({super.key});
 
   @override
@@ -34,10 +29,10 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: const _SignupContent(),
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: _SignupContent(),
         ),
       ),
     );
@@ -86,17 +81,17 @@ class _SignupContentState extends State<_SignupContent> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 16),
-          Container(
-            width: 64,
-            height: 64,
+          DecoratedBox(
             decoration: const BoxDecoration(
               color: AppColors.primary,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.directions_car_rounded,
-              color: Colors.white,
-              size: 32,
+            child: const SizedBox(
+              width: 64,
+              height: 64,
+              child: Center(
+                child: Icon(Icons.directions_car_rounded, color: Colors.white, size: 32),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -121,9 +116,7 @@ class _SignupContentState extends State<_SignupContent> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(24.0),
+          DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16.0),
@@ -136,174 +129,162 @@ class _SignupContentState extends State<_SignupContent> {
                 ),
               ],
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                BlocBuilder<SignupBloc, SignupState>(
-                  buildWhen: (prev, curr) => prev.username != curr.username,
-                  builder: (context, state) {
-                    return _FormField(
-                      controller: _nameController,
-                      label: 'Nombre completo',
-                      hint: 'Ej. Juan Pérez',
-                      onChanged: (v) => context
-                          .read<SignupBloc>()
-                          .add(OnUsernameChanged(username: v)),
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-                BlocBuilder<SignupBloc, SignupState>(
-                  buildWhen: (prev, curr) =>
-                      prev.email != curr.email ||
-                      prev.isEmailValid != curr.isEmailValid,
-                  builder: (context, state) {
-                    return _FormField(
-                      controller: _emailController,
-                      label: 'Correo electrónico',
-                      hint: 'correo@ejemplo.com',
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: state.email.isNotEmpty && !state.isEmailValid
-                          ? 'Correo inválido'
-                          : null,
-                      onChanged: (v) => context
-                          .read<SignupBloc>()
-                          .add(OnEmailChanged(email: v)),
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-                BlocBuilder<SignupBloc, SignupState>(
-                  buildWhen: (prev, curr) =>
-                      prev.password != curr.password ||
-                      prev.isPasswordVisible != curr.isPasswordVisible,
-                  builder: (context, state) {
-                    return _FormField(
-                      controller: _passwordController,
-                      label: 'Contraseña',
-                      obscureText: !state.isPasswordVisible,
-                      onChanged: (v) => context
-                          .read<SignupBloc>()
-                          .add(OnPasswordChanged(password: v)),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          state.isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.textSecondary,
-                        ),
-                        onPressed: () => context
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BlocBuilder<SignupBloc, SignupState>(
+                    buildWhen: (prev, curr) => prev.username != curr.username,
+                    builder: (context, state) {
+                      return _FormField(
+                        controller: _nameController,
+                        label: 'Nombre completo',
+                        hint: 'Ej. Juan Pérez',
+                        onChanged: (v) => context
                             .read<SignupBloc>()
-                            .add(const TogglePasswordVisibility()),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                BlocBuilder<SignupBloc, SignupState>(
-                  buildWhen: (prev, curr) => prev.status != curr.status,
-                  builder: (context, state) {
-                    final isLoading = state.status == Status.loading;
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                            .add(OnUsernameChanged(username: v)),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  BlocBuilder<SignupBloc, SignupState>(
+                    buildWhen: (prev, curr) =>
+                        prev.email != curr.email || prev.isEmailValid != curr.isEmailValid,
+                    builder: (context, state) {
+                      return _FormField(
+                        controller: _emailController,
+                        label: 'Correo electrónico',
+                        hint: 'correo@ejemplo.com',
+                        keyboardType: TextInputType.emailAddress,
+                        errorText: state.email.isNotEmpty && !state.isEmailValid
+                            ? 'Correo inválido'
+                            : null,
+                        onChanged: (v) => context
+                            .read<SignupBloc>()
+                            .add(OnEmailChanged(email: v)),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  BlocBuilder<SignupBloc, SignupState>(
+                    buildWhen: (prev, curr) =>
+                        prev.password != curr.password ||
+                        prev.isPasswordVisible != curr.isPasswordVisible,
+                    builder: (context, state) {
+                      return _FormField(
+                        controller: _passwordController,
+                        label: 'Contraseña',
+                        obscureText: !state.isPasswordVisible,
+                        onChanged: (v) => context
+                            .read<SignupBloc>()
+                            .add(OnPasswordChanged(password: v)),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            state.isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            color: AppColors.textSecondary,
+                          ),
+                          onPressed: () => context
+                              .read<SignupBloc>()
+                              .add(const TogglePasswordVisibility()),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      onPressed: isLoading
-                          ? null
-                          : () {
-                              FocusScope.of(context).unfocus();
-                              context
-                                  .read<SignupBloc>()
-                                  .add(const Signup());
-                            },
-                      child: isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  BlocBuilder<SignupBloc, SignupState>(
+                    buildWhen: (prev, curr) => prev.status != curr.status,
+                    builder: (context, state) {
+                      final isLoading = state.status == Status.loading;
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                        ),
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                FocusScope.of(context).unfocus();
+                                context.read<SignupBloc>().add(const Signup());
+                              },
+                        child: isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              )
+                            : const Text(
+                                'Registrarse',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Inter',
                                 ),
                               ),
-                            )
-                          : const Text(
-                              'Registrarse',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Inter',
-                              ),
-                            ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: const [
-                    Expanded(
-                      child: Divider(color: AppColors.border, thickness: 1),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text(
-                        'O regístrate con',
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 13,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(color: AppColors.border, thickness: 1),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    side: const BorderSide(color: AppColors.border),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    // TODO: Google sign-up
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/120px-Google_%22G%22_logo.svg.png',
-                        height: 20,
-                        errorBuilder: (_, __, ___) => const Icon(
-                          Icons.g_mobiledata,
-                          size: 20,
-                          color: Colors.red,
+                  const SizedBox(height: 20),
+                  Row(
+                    children: const [
+                      Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          'O regístrate con',
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 13,
+                            fontFamily: 'Inter',
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      const Text(
-                        'Google',
-                        style: TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
+                      Expanded(child: Divider(color: AppColors.border, thickness: 1)),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      side: const BorderSide(color: AppColors.border),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/120px-Google_%22G%22_logo.svg.png',
+                          height: 20,
+                          errorBuilder: (_, __, ___) => const Icon(
+                            Icons.g_mobiledata,
+                            size: 20,
+                            color: Colors.red,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Google',
+                          style: TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Inter',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -334,9 +315,7 @@ class _SignupContentState extends State<_SignupContent> {
           ),
           const SizedBox(height: 16),
           TextButton(
-            onPressed: () {
-              // TODO: Navigate to terms
-            },
+            onPressed: () {},
             child: const Text(
               'Términos y Condiciones',
               style: TextStyle(
@@ -353,9 +332,7 @@ class _SignupContentState extends State<_SignupContent> {
   }
 }
 
-/// A reusable styled text field that matches the Intiva sign-in design.
-///
-/// Wraps [TextField] with consistent border, fill, label, and hint styling.
+// Reused across 3 form fields — kept as a class
 class _FormField extends StatelessWidget {
   final String label;
   final String? hint;
@@ -389,21 +366,12 @@ class _FormField extends StatelessWidget {
         labelText: label,
         hintText: hint,
         errorText: errorText,
-        labelStyle: const TextStyle(
-          color: AppColors.textSecondary,
-          fontFamily: 'Inter',
-        ),
-        floatingLabelStyle: const TextStyle(
-          color: AppColors.primary,
-          fontFamily: 'Inter',
-        ),
+        labelStyle: const TextStyle(color: AppColors.textSecondary, fontFamily: 'Inter'),
+        floatingLabelStyle: const TextStyle(color: AppColors.primary, fontFamily: 'Inter'),
         filled: true,
         fillColor: Colors.white,
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.border),

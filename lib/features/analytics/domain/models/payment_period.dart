@@ -1,6 +1,4 @@
-/// Represents a single payment period within a loan amortisation schedule.
 class PaymentPeriod {
-
   final int periodNumber;
   final DateTime paymentDate;
   final double initialBalance;
@@ -14,7 +12,6 @@ class PaymentPeriod {
   final bool isBalloon;
   final bool isGracePeriod;
 
-  /// Creates a [PaymentPeriod] with all required fields.
   const PaymentPeriod({
     required this.periodNumber,
     required this.paymentDate,

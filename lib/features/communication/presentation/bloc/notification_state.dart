@@ -1,31 +1,36 @@
+import 'package:intiva_mobile_application/core/enums/status.dart';
 import 'package:intiva_mobile_application/features/communication/domain/models/notification.dart';
 
-/// Base class for all states emitted by [NotificationBloc].
-sealed class NotificationState {}
-
-class NotificationInitial extends NotificationState {}
-class NotificationLoading extends NotificationState {}
-class NotificationSuccess extends NotificationState {
-  final String message;
-
-  /// Creates a [NotificationSuccess] state.
-  NotificationSuccess(this.message);
-}
-
-/// Emitted when an operation fails.
-class NotificationError extends NotificationState {
-
-  final String message;
-
-  /// Creates a [NotificationError] state.
-  NotificationError(this.message);
-}
-
-/// Emitted when the notification list has been loaded successfully.
-class NotificationsLoaded extends NotificationState {
-
+class NotificationState {
+  final Status status;
   final List<Notification> notifications;
 
-  /// Creates a [NotificationsLoaded] state.
-  NotificationsLoaded(this.notifications);
+  /// Message shown after a successful send action.
+  final String? successMessage;
+  final String? message;
+
+  const NotificationState({
+    this.status = Status.initial,
+    this.notifications = const [],
+    this.successMessage,
+    this.message,
+  });
+
+  static const _absent = Object();
+
+  NotificationState copyWith({
+    Status? status,
+    List<Notification>? notifications,
+    Object? successMessage = _absent,
+    Object? message = _absent,
+  }) {
+    return NotificationState(
+      status: status ?? this.status,
+      notifications: notifications ?? this.notifications,
+      successMessage: successMessage == _absent
+          ? this.successMessage
+          : successMessage as String?,
+      message: message == _absent ? this.message : message as String?,
+    );
+  }
 }
